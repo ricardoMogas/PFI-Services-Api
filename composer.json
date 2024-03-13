@@ -1,0 +1,12 @@
+{
+    "name": "eltra/api-with-php",
+    "authors": [
+        {
+            "name": "ricardoMogas",
+            "email": "al066208@uacam.mx"
+        }
+    ],
+    "require": {
+        "firebase/php-jwt": "^6.10"
+    }
+}
