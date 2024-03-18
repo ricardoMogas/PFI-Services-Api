@@ -62,13 +62,13 @@ foreach ($students as $key => $student) {
 */
 
 // Ejemplo de uso GetAll
-/*
+
 $studentDAO = new StudentDAO();
 $students = $studentDAO->GetAll();
 foreach ($students as $key => $student) {
-    echo "$key: {$student->name}\n";
+    echo "$key: {$student->name} : {$student-> p_last_name} : {$student-> birthday_date}\n";
 }
-*/
+
 
 /* ejemplo de SELECT */
 /*
