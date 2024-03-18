@@ -22,63 +22,64 @@ class FrontController
         if (file_exists($classFile)) {
             include_once $classFile;
         } else {
-            $this->handleClassNotFound($nameClass);
-        }
-    }
-
-    private function handleClassNotFound($nameClass)
-    {
-        if ($nameClass != 'HelpController') {
-            $responseError = array(
-                'status' => 'error',
-                'result' => array(
-                    'error_id' => '404',
-                    'error_msg' => 'Clase no encontrada'
-                )
-            );
-            header('Content-Type: application/json');
-            echo json_encode($responseError);
-        } else {
-            $controller = new HelpController();
+            return;
         }
     }
 
     private function goToController($url, $urlSegments, $action, $body)
     {
         $params = array();
-        // saber si el segmento de la url tiene un ? para saber si tiene parametros
         $NameComplete = !empty($urlSegments[1]) ? ucfirst($urlSegments[1]) : 'Help';
+        // si es nameComplete es igual a Help, entonces se redirige a la página de ayuda
+        if ($NameComplete == 'Help') {
+            $this->goToDocs();
+            return;
+        }
+
+        // Determinar si hay parámetros en la URL
         if (strpos($NameComplete, '?') !== false) {
-            // todo lo que este antes del ? en el segmento de la url
-            $controllerName = strstr($NameComplete, '?', true); 
-            // obtener los parametros de la url
+            $controllerName = strstr($NameComplete, '?', true);
             $urlComponents = parse_url($url);
             parse_str($urlComponents['query'], $params);
         } else {
             $controllerName = $NameComplete;
         }
+
         $controllerClassName = $controllerName . 'Controller';
-        if (class_exists($controllerClassName)) {
-            $controller = new $controllerClassName();
-            // código antes del if
-            if (method_exists($controller, $action)) {
-                return call_user_func_array([$controller, $action], array_merge($params, $body));
-            } else if (method_exists($controller, 'index')) {
-                $action = 'index';
-                return call_user_func_array([$controller, $action], array_merge($params, $body));
+
+        try {
+            // Intentar instanciar el controlador
+            if (class_exists($controllerClassName)) {
+                $controller = new $controllerClassName();
+
+                // Verificar si el método existe en el controlador
+                if (method_exists($controller, $action)) {
+                    return call_user_func_array([$controller, $action], array_merge($params ?? [], $body ?? []));
+                } elseif (method_exists($controller, 'index')) {
+                    $action = 'index';
+                    return call_user_func_array([$controller, $action], array_merge($params ?? [], $body ?? []));
+                } else {
+                    header('Content-Type: application/json');
+                    throw new Exception("Método Index no encontrado, declarar método index en el controlador");
+                }
             } else {
-                return "Método Index no encontrado, declarar método index en el controlador";
+                header('Content-Type: application/json');
+                throw new Exception("Controlador no encontrado: $controllerClassName");
             }
+        } catch (Exception $e) {
+            // Manejar la excepción
+            return "Error: " . $e->getMessage();
         }
     }
 
     private function handleRouting()
     {
         $url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
-        $action = !empty($urlSegments[2]) ? $urlSegments[2] : 'index';
+        $action = !empty($urlSegments[2]) ? $urlSegments[2] : 'index'; //ya no uso los segmentes para la acción REVISAR 
         $method = $_SERVER['REQUEST_METHOD'];
         $urlSegments = explode('/', trim($url, '/'));
         $body = json_decode(file_get_contents('php://input'), true);
+
         switch ($method) {
             case 'GET':
                 $action = 'doGet';
@@ -100,5 +101,10 @@ class FrontController
                 echo json_encode(['error' => '404', 'error_msg' => 'Método no permitido']);
                 break;
         }
+    }
+
+    public function goToDocs()
+    {
+        header('Location: /PFI-Services-Api/docs/');
     }
 }

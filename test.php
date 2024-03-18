@@ -1,4 +1,7 @@
 <?php
+require_once './core/conexionDB.php';
+
+/*
 require_once 'vendor/autoload.php';
 
 use \Firebase\JWT\JWT;
@@ -20,3 +23,4 @@ $token = array(
 
 $jwt = JWT::encode($token, $secret_key);
 echo $jwt;
+*/
