@@ -18,14 +18,9 @@ final class StudentDAO extends ConexionDB
         $students = [];
         foreach ($result as $row) {
             $student = new Student();
-            $student->registration = $row["registration"];
-            $student->name = $row["name"];
-            $student->p_last_name = $row["p_last_name"];
-            $student->m_last_name = $row["m_last_name"];
-            $student->gender = $row["gender"];
-            $student->birthday_date = $row["birthday_date"];
-            $student->ethnicity = $row["origin_place"];
-            $student->date_of_registration = $row["date_of_registration"];
+            foreach ($row as $key => $value) {
+                $student->$key = $value;
+            }
             $students[] = $student;
         }
         return $students;
@@ -39,14 +34,9 @@ final class StudentDAO extends ConexionDB
         $students = [];
         foreach ($result as $row) {
             $student = new Student();
-            $student->registration = $row["registration"];
-            $student->name = $row["name"];
-            $student->p_last_name = $row["p_last_name"];
-            $student->m_last_name = $row["m_last_name"];
-            $student->gender = $row["gender"];
-            $student->birthday_date = $row["birthday_date"];
-            $student->ethnicity = $row["origin_place"];
-            $student->date_of_registration = $row["date_of_registration"];
+            foreach ($row as $key => $value) {
+                $student->$key = $value;
+            }
             $students[] = $student;
         }
         return $students;
@@ -66,7 +56,7 @@ foreach ($students as $key => $student) {
 $studentDAO = new StudentDAO();
 $students = $studentDAO->GetAll();
 foreach ($students as $key => $student) {
-    echo "$key: {$student->name} : {$student-> p_last_name} : {$student-> birthday_date}\n";
+    echo "$key: {$student->name} : {$student-> p_last_name} : {$student-> status} : {$student-> birthday_date}\n";
 }
 */
 

@@ -9,8 +9,10 @@ class Student {
     public $ethnicity;
     public $origin_place;
     public $date_of_registration;
+    public $career;
+    public $status; 
     
-    public function __construct($registration = null, $name = null, $p_last_name = null, $m_last_name = null, $gender = null, $birthday_date = null, $ethnicity = null, $origin_place = null, $date_of_registration = null)
+    public function __construct($registration = null, $name = null, $p_last_name = null, $m_last_name = null, $gender = null, $birthday_date = null, $ethnicity = null, $origin_place = null, $date_of_registration = null, $career = null, $status = null)
     {
         $this->registration = $registration;
         $this->name = $name;
@@ -21,7 +23,11 @@ class Student {
         $this->ethnicity = $ethnicity;
         $this->origin_place = $origin_place;
         $this->date_of_registration = $date_of_registration;
+        $this->career = $career;
+        $this->status = $status;
     }
+    
+    // Getter and Setter methods for $registration
     public function getRegistration()
     {
         return $this->registration;
@@ -32,6 +38,7 @@ class Student {
         $this->registration = $registration;
     }
 
+    // Getter and Setter methods for $name
     public function getName()
     {
         return $this->name;
@@ -42,6 +49,7 @@ class Student {
         $this->name = $name;
     }
 
+    // Getter and Setter methods for $p_last_name
     public function getPLastName()
     {
         return $this->p_last_name;
@@ -52,6 +60,7 @@ class Student {
         $this->p_last_name = $p_last_name;
     }
 
+    // Getter and Setter methods for $m_last_name
     public function getMLastName()
     {
         return $this->m_last_name;
@@ -62,6 +71,7 @@ class Student {
         $this->m_last_name = $m_last_name;
     }
 
+    // Getter and Setter methods for $gender
     public function getGender()
     {
         return $this->gender;
@@ -72,6 +82,7 @@ class Student {
         $this->gender = $gender;
     }
 
+    // Getter and Setter methods for $birthday_date
     public function getBirthdayDate()
     {
         return $this->birthday_date;
@@ -82,6 +93,7 @@ class Student {
         $this->birthday_date = $birthday_date;
     }
 
+    // Getter and Setter methods for $ethnicity
     public function getEthnicity()
     {
         return $this->ethnicity;
@@ -92,6 +104,7 @@ class Student {
         $this->ethnicity = $ethnicity;
     }
 
+    // Getter and Setter methods for $origin_place
     public function getOriginPlace()
     {
         return $this->origin_place;
@@ -102,6 +115,7 @@ class Student {
         $this->origin_place = $origin_place;
     }
 
+    // Getter and Setter methods for $date_of_registration
     public function getDateOfRegistration()
     {
         return $this->date_of_registration;
@@ -112,4 +126,25 @@ class Student {
         $this->date_of_registration = $date_of_registration;
     }
 
+    // Getter and Setter methods for $career
+    public function getCareer()
+    {
+        return $this->career;
+    }
+
+    public function setCareer($career)
+    {
+        $this->career = $career;
+    }
+
+    // Getter and Setter methods for $status
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
 }

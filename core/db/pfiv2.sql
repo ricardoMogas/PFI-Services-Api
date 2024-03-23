@@ -210,6 +210,8 @@ CREATE TABLE `students` (
   `gender` char(255) NOT NULL,
   `birthday_date` date NOT NULL,
   `ethnicity` varchar(255) NOT NULL,
+  `career` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
   `origin_place` varchar(255) NOT NULL,
   `date_of_registration` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -218,15 +220,15 @@ CREATE TABLE `students` (
 -- Volcado de datos para la tabla `students`
 --
 
-INSERT INTO `students` (`registration`, `name`, `p_last_name`, `m_last_name`, `gender`, `birthday_date`, `ethnicity`, `origin_place`, `date_of_registration`) VALUES
-(62231, 'Ricardo Arian', 'Puc', 'Duran', 'Male', '2003-05-14', 'Another', 'Campeche', '2023-06-09'),
-(66132, 'Angel Gabriel', 'Manrero', 'Hidalgo', 'Male', '2002-04-16', 'Another', 'Campeche', '2021-02-03'),
-(66208, 'Ricardo de jesus', 'Moo', 'Vargas', 'Male', '2001-10-29', 'Another', 'Campeche', '2021-03-03'),
-(66915, 'Jorge Francisco ', 'Dzul', 'Cobos', 'Male', '2002-10-28', 'Another', 'campeche', '2021-07-02'),
-(68322, 'Gael Alexander', 'Carrillo', 'Chan', 'Male', '2003-12-28', 'Another', 'Campeche', '2022-11-15'),
-(68355, 'Axel Alessandro', 'Chávez', 'Moreno', 'Male', '2003-10-18', 'Another', 'Campeche', '2023-03-31'),
-(68627, 'Arturo Alberto', 'Zavala', 'Morales', 'Male', '2002-12-06', 'Another', 'Carmen', '2023-07-06'),
-(69951, 'Uriel Isai', 'Landeros ', 'Mijangos', 'Male', '2003-09-30', 'Another', 'Campeche', '2023-04-03');
+INSERT INTO `students` (`registration`, `name`, `p_last_name`, `m_last_name`, `gender`, `birthday_date`, `ethnicity`, `career`, `status`, `origin_place`, `date_of_registration`) VALUES
+(62231, 'Ricardo Arian', 'Puc', 'Duran', 'Hombre', '2003-05-14', 'Otro', 'ISC', 'Activo', 'Campeche', '2023-06-09'),
+(66132, 'Angel Gabriel', 'Manrero', 'Hidalgo', 'Hombre', '2002-04-16', 'Otro', 'ISC', 'Activo', 'Campeche', '2021-02-03'),
+(66208, 'Ricardo de jesus', 'Moo', 'Vargas', 'Hombre', '2001-10-29', 'Otro', 'ISC', 'Activo', 'Campeche', '2021-03-03'),
+(66915, 'Jorge Francisco', 'Dzul', 'Cobos', 'Hombre', '2002-10-28', 'Otro', 'ISC', 'Activo', 'Campeche', '2021-07-02'),
+(68322, 'Gael Alexander', 'Carrillo', 'Chan', 'Hombre', '2003-12-28', 'Otro', 'ISC', 'Activo', 'Campeche', '2022-11-15'),
+(68355, 'Axel Alessandro', 'Chávez', 'Moreno', 'Hombre', '2003-10-18', 'Otro', 'ISC', 'Activo', 'Campeche', '2023-03-31'),
+(68627, 'Arturo Alberto', 'Zavala', 'Morales', 'Hombre', '2002-12-06', 'Otro', 'ISC', 'Activo', 'Carmen', '2023-07-06'),
+(69951, 'Uriel Isai', 'Landeros', 'Mijangos', 'Hombre', '2003-09-30', 'Otro', 'ISC', 'Activo', 'Campeche', '2023-04-03');
 
 -- --------------------------------------------------------
 
