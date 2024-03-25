@@ -174,7 +174,7 @@ INSERT INTO `locker` (`id_locker`, `id_borrowing`, `f_loan`, `f_devolution`, `re
 -- Estructura de tabla para la tabla `registration_visit (registered)`
 --
 
-CREATE TABLE `registration_visit (registered)` (
+CREATE TABLE `registered_visits` (
   `no_Visit` int(11) NOT NULL,
   `registration` int(11) NOT NULL,
   `entry_time` time(6) NOT NULL,
@@ -186,7 +186,7 @@ CREATE TABLE `registration_visit (registered)` (
 -- Volcado de datos para la tabla `registration_visit (registered)`
 --
 
-INSERT INTO `registration_visit (registered)` (`no_Visit`, `registration`, `entry_time`, `exit_time`, `visit_date`) VALUES
+INSERT INTO `registered_visits` (`no_Visit`, `registration`, `entry_time`, `exit_time`, `visit_date`) VALUES
 (12, 66208, '12:00:00.000000', '14:34:00.000000', '2024-03-02'),
 (24, 68322, '09:00:00.000000', '12:24:00.000000', '2024-03-04'),
 (34, 66915, '12:00:00.000000', '14:00:00.000000', '2024-03-03'),
@@ -236,7 +236,7 @@ INSERT INTO `students` (`registration`, `name`, `p_last_name`, `m_last_name`, `g
 -- Estructura de tabla para la tabla `visit_registration (not registered)`
 --
 
-CREATE TABLE `visit_registration (not registered)` (
+CREATE TABLE `unregistered_visits` (
   `no_Visit` int(11) NOT NULL,
   `registration` int(11) NOT NULL,
   `entry_time` time(6) NOT NULL,
@@ -294,7 +294,7 @@ ALTER TABLE `locker`
 --
 -- Indices de la tabla `registration_visit (registered)`
 --
-ALTER TABLE `registration_visit (registered)`
+ALTER TABLE `registered_visits`
   ADD PRIMARY KEY (`no_Visit`),
   ADD UNIQUE KEY `registration` (`registration`) USING BTREE;
 
@@ -308,7 +308,7 @@ ALTER TABLE `students`
 --
 -- Indices de la tabla `visit_registration (not registered)`
 --
-ALTER TABLE `visit_registration (not registered)`
+ALTER TABLE `unregistered_visits`
   ADD PRIMARY KEY (`no_Visit`),
   ADD UNIQUE KEY `registration` (`registration`) USING BTREE;
 
@@ -355,7 +355,7 @@ ALTER TABLE `locker`
 --
 -- Filtros para la tabla `registration_visit (registered)`
 --
-ALTER TABLE `registration_visit (registered)`
+ALTER TABLE `registered_visits`
   ADD CONSTRAINT `registration_visit (registered)_ibfk_1` FOREIGN KEY (`Registration`) REFERENCES `students` (`Registration`);
 
 --
@@ -367,7 +367,7 @@ ALTER TABLE `students`
 --
 -- Filtros para la tabla `visit_registration (not registered)`
 --
-ALTER TABLE `visit_registration (not registered)`
+ALTER TABLE `unregistered_visits`
   ADD CONSTRAINT `visit_registration (not registered)_ibfk_1` FOREIGN KEY (`Registration`) REFERENCES `students` (`Registration`);
 COMMIT;
 
