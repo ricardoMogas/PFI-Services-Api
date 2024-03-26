@@ -68,7 +68,7 @@ class ConexionDB
     }
 
     // Método para ejecutar una consulta INSERT
-    public function insertData($sqlstr)
+    public function insertData($sqlstr, $params)
     {
         try {
             // Verificar si la consulta comienza con "INSERT"
@@ -78,7 +78,7 @@ class ConexionDB
                     throw new Exception("Error al preparar la consulta: " . $this->conexion->error);
                 }
 
-                $stmt->execute();
+                $stmt->execute($params);
                 $stmt->close();
             } else {
                 throw new Exception("Solo se permiten consultas INSERT.");
@@ -89,7 +89,7 @@ class ConexionDB
     }
 
     // Método para ejecutar una consulta INSERT y obtener el ID insertado
-    public function insertDataId($sqlstr)
+    public function insertDataId($sqlstr, $params)
     {
         try {
             // Verificar si la consulta comienza con "INSERT"
@@ -99,7 +99,7 @@ class ConexionDB
                     throw new Exception("Error al preparar la consulta: " . $this->conexion->error);
                 }
 
-                $stmt->execute();
+                $stmt->execute($params);
                 $insertId = $stmt->insert_id;  // Obtener el ID de la fila insertada
                 $stmt->close();
 
@@ -113,7 +113,7 @@ class ConexionDB
     }
 
     // Método para ejecutar una consulta UPDATE
-    public function updateData($sqlstr)
+    public function updateData($sqlstr, $params = [])
     {
         try {
             // Verificar si la consulta comienza con "UPDATE"
@@ -123,6 +123,10 @@ class ConexionDB
                     throw new Exception("Error al preparar la consulta: " . $this->conexion->error);
                 }
 
+                // Vincular los parámetros y ejecutar la consulta
+                if (!empty($params)) {
+                    $stmt->bind_param(str_repeat('s', count($params)), ...$params);
+                }
                 $stmt->execute();
                 $stmt->close();
             } else {
