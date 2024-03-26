@@ -40,17 +40,19 @@ final class VisitsDAO extends ConexionDB
         return $registeredVisits;
     }
 
-    public function RegisterVisit($registeredVisit)
+    public function RegisterNewVisit($registration)
     {
-        $query = "INSERT INTO registered_visits (registration, entry_time, exit_time, visit_date) VALUES (:registration, :entry_time, :exit_time, :visit_date)";
-        $params = [
+        $registeredVisit = new RegisteredVisits();
+        $registeredVisit->registration = $registration;
+        $registeredVisit->entry_time = date("H:i:s");
+        $registeredVisit->visit_date = date("Y-m-d");
+        $data = [
             ':registration' => $registeredVisit->registration,
             ':entry_time' => $registeredVisit->entry_time,
-            ':exit_time' => $registeredVisit->exit_time,
-            ':visit_date' => $registeredVisit->visit_date
+            ':visit_date' => $registeredVisit->visit_date,
         ];
-        $result = $this->executeQuery($query, $params);
-        return $result;
+        $this->insertData('INSERT INTO registered_visits (registration, entry_time, exit_time, visit_date) VALUES (:registration, :entry_time, :exit_time, :visit_date)', $data);
+        return true;
     }
 }
 
@@ -71,3 +73,7 @@ foreach ($visits as $key => $visit) {
     echo "$key: {$visit->registration} : {$visit->entry_time} > {$visit->exit_time} ------ ";
 }
 */
+
+// prueba de uso RegisterVisit()
+$visitsDAO = new VisitsDAO();
+$visitsDAO->RegisterNewVisit(66208);

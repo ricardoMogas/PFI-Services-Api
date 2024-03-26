@@ -162,3 +162,20 @@ class ConexionDB
         }
     }
 }
+/*
+$conexionDB = new ConexionDB();
+
+$sql = "INSERT INTO registered_visits (registration, entry_time, visit_date) VALUES (:registration, :entry_time, :visit_date)";
+
+$params = [
+    ':registration' => 66208, // reemplaza esto con el valor real
+    ':entry_time' => date("H:i:s"), // reemplaza esto con el valor real
+    ':visit_date' => date("Y-m-d"), // reemplaza esto con el valor real
+];
+
+try {
+    $conexionDB->insertData($sql, $params);
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+*/
