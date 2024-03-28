@@ -174,6 +174,7 @@ final class VisitsDAO extends ConexionDB
     }
 }
 // PRUEBA DE USO DeleteVisit()
+/*
 $visitsDAO = new VisitsDAO();
 $result = $visitsDAO->DeleteVisit(1, null, null);
 if ($result) {
@@ -181,7 +182,7 @@ if ($result) {
 } else {
     echo "No se pudo eliminar el registro: No existe o hubo un error\n";
 }
-
+*/
 
 // PRUEBA DE USO RegisterExitVisit()
 /*
