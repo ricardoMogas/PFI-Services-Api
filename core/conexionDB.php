@@ -162,3 +162,22 @@ class ConexionDB
         }
     }
 }
+/*
+// Ejemplo de uso de insertData CON PARAMETROS
+$conexionDB = new ConexionDB();
+$sql = "INSERT INTO registered_visits (no_Visit, registration, entry_time, exit_time, visit_date) 
+        VALUES (?, ?, ?, ?, ?)";
+$params = [
+    $no_visitValue = null, // reemplaza esto con el valor real
+    $registrationValue = 68322, // reemplaza esto con el valor real
+    $entry_time = date("H:i:s"), // reemplaza esto con el valor real
+    $exit_time = null, // reemplaza esto con el valor real
+    $visit_date = date("Y-m-d"), // reemplaza esto con el valor real
+];
+
+try {
+    $conexionDB->insertData($sql, $params);
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+*/
