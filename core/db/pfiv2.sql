@@ -14,7 +14,7 @@
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET GLOBAL time_zone = 'America/Mexico_City';
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -208,8 +208,8 @@ INSERT INTO `registered_visits` (`registration`, `entry_time`, `exit_time`, `vis
 CREATE TABLE `unregistered_visits` (
   `no_Visit` int(11) NOT NULL AUTO_INCREMENT,
   `registration` int(11) NOT NULL,
-  `entry_time` time(6) NOT NULL,
-  `exit_time` time(6) NOT NULL,
+  `entry_time` time(6) DEFAULT NULL,
+  `exit_time` time(6) DEFAULT NULL,
   `visit_date` date NOT NULL,
   PRIMARY KEY (`no_Visit`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
