@@ -99,7 +99,7 @@ final class VisitsNonRegisteredDAO extends ConexionDB
         Función que busca segun la MATRICULA(registration) y la FECHA(date de hoy normalmente) 
         de visita si existe un registro de visita sin registrar la salida.
         Si existen mas de una visita sin registrar la salida, se registra la salida con la misma
-        hora en todas las visitas con exit_time null del dia respectivo.
+        hora en todas las visitas con exit_time null del dia respectivo.    
     */
     public function RegisterExitVisit($registration, $date = null)
     {
@@ -126,6 +126,35 @@ final class VisitsNonRegisteredDAO extends ConexionDB
             $this->updateData($sql, $params);
             return true;
         }
+    }
+    public function DeleteVisit($no_Visit = null, $resistration = null, $date = null)
+    {
+        if ($date === null) {
+            $date = date("Y-m-d");
+        }
+        if ($resistration != null) {
+            $resultDate = $this->getData("SELECT * FROM unregistered_visits WHERE registration = $resistration AND visit_date = $date");
+            if ($resultDate === []) {
+                //echo "No existe el registro de visita de $resistration el día $date";
+                return false;
+            }
+            $sql = "DELETE FROM unregistered_visits WHERE registration = ? AND visit_date = ?";
+            $params = [$resistration, $date];
+            $this->deleteData($sql, $params);
+            return true;
+        }
+        if ($no_Visit != null) {
+            $result = $this->getData("SELECT * FROM unregistered_visits WHERE no_Visit = $no_Visit");
+            if ($result === []) {
+                //echo "No existe el registro de visita con no_Visit $no_Visit";
+                return false;
+            }
+            $sql = "DELETE FROM unregistered_visits WHERE no_Visit = ?";
+            $params = [$no_Visit];
+            $this->deleteData($sql, $params);
+            return true;
+        }
+        
     }
 }
 

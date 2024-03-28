@@ -66,26 +66,30 @@ final class VisitsDAO extends ConexionDB
         return $registeredVisits;
     }
     /*
-        Función que busca segun la MATRICULA(registration) si existe un registro de visita sin registrar la salida.
-        de HOY siempre.
+        Función que busca segun la MATRICULA(registration) y fecha si se le da si no por defecto es la de hoy
+        si existe un registro de visita sin registrar la salida.
     */
-    public function RegisterNewVisit($registration)
+    public function RegisterNewVisit($registration, $date = null)
     {
-        $student = $this->getData("SELECT * FROM students WHERE registration = $registration");
-        if ($student == null) {
-            // echo "No existe el estudiante con matricula $registration";
+        if ($date === null) {
+            $date = date("Y-m-d");
+        }
+        $result = $this->getData(
+            "SELECT * FROM registered_visits WHERE registration = $registration AND exit_time IS NULL AND visit_date = $date"
+        );
+        if (($result) !== []) {
+            echo "Ya existe un registro de visita de $registration el día $date";
             return false;
         }
 
         $entry_time = date("H:i:s");
-        $visit_date = date("Y-m-d");
 
         $params = [
             null, // no_Visit
             $registration, // registration
             $entry_time, // entry_time
             null, // exit_time
-            $visit_date // visit_date
+            $date // visit_date
         ];
 
         $sql = 'INSERT INTO registered_visits (no_Visit, registration, entry_time, exit_time, visit_date) VALUES (?, ?, ?, ?, ?)';
@@ -96,10 +100,14 @@ final class VisitsDAO extends ConexionDB
     /*
         Función que busca segun la MATRICULA(registration) y la FECHA(date de hoy normalmente) 
         de visita si existe un registro de visita sin registrar la salida.
+        Si existen mas de una visita sin registrar la salida, se registra la salida con la misma
+        hora en todas las visitas con exit_time null del dia respectivo.  
     */
-    public function RegisterExitVisit($registration)
+    public function RegisterExitVisit($registration, $date = null)
     {
-        $date = date("Y-m-d");
+        if ($date === null) {
+            $date = date("Y-m-d");
+        }
         $result = $this->getData(
             "SELECT * FROM registered_visits WHERE registration = $registration AND exit_time IS NULL AND visit_date = $date"
         );
@@ -109,24 +117,71 @@ final class VisitsDAO extends ConexionDB
         if (($result) === null) {
             // echo "No existe registro de visita de $registration el día $date";
             return false;
-        } elseif ($resultNotNull !== null){
+        } elseif ($result === [] && $resultNotNull !== []) {
             // echo "Ya se ha registrado la salida de $registration el día $date";
-            return true;
+            return false;
         } else {
             $exit_time = date("H:i:s");
             $params = [
                 $exit_time, // exit_time
-                $registration // registration
+                $registration, // registration
+                $date // visit_date
             ];
-            $sql = 'UPDATE registered_visits SET exit_time = ? WHERE registration = ?';
+            $sql = 'UPDATE registered_visits SET exit_time = ? WHERE registration = ? AND visit_date = ?';
             $this->updateData($sql, $params);
             return true;
         }
-        /*
-
-        */
+    }
+    /*
+        Función que elimina un registro de visita segun el no_Visit o la matricula y la fecha.
+        - por No_visit DeleteVisit(1, null, null);
+        - por matricula DeleteVisit(null, 66208, null);
+        si es por matriculo y no se da la fecha se toma la fecha actual.
+    */
+    public function DeleteVisit($no_Visit = null, $resistration = null, $date = null)
+    {
+        if ($date === null) {
+            $date = date("Y-m-d");
+        }
+        if ($resistration != null) {
+            $result = $this->getData("SELECT * FROM students WHERE registration = $resistration");
+            if ($result === []) {
+                //echo "No existe el usuario con matricula $resistration";
+                return false;
+            }
+            $resultDate = $this->getData("SELECT * FROM registered_visits WHERE registration = $resistration AND visit_date = $date");
+            if ($resultDate === []) {
+                //echo "No existe el registro de visita de $resistration el día $date";
+                return false;
+            }
+            $sql = "DELETE FROM registered_visits WHERE registration = ? AND visit_date = ?";
+            $params = [$resistration, $date];
+            $this->deleteData($sql, $params);
+            return true;
+        }
+        if ($no_Visit != null) {
+            $result = $this->getData("SELECT * FROM registered_visits WHERE no_Visit = $no_Visit");
+            if ($result === []) {
+                //echo "No existe el registro de visita con no_Visit $no_Visit";
+                return false;
+            }
+            $sql = "DELETE FROM registered_visits WHERE no_Visit = ?";
+            $params = [$no_Visit];
+            $this->deleteData($sql, $params);
+            return true;
+        }
+        
     }
 }
+// PRUEBA DE USO DeleteVisit()
+$visitsDAO = new VisitsDAO();
+$result = $visitsDAO->DeleteVisit(1, null, null);
+if ($result) {
+    echo "Registro eliminado exitosamente\n";
+} else {
+    echo "No se pudo eliminar el registro: No existe o hubo un error\n";
+}
+
 
 // PRUEBA DE USO RegisterExitVisit()
 /*
@@ -175,4 +230,3 @@ foreach ($visits as $key => $visit) {
     echo "$key: {$visit->registration} : {$visit->entry_time} > {$visit->exit_time} ------ ";
 }
 */
-
