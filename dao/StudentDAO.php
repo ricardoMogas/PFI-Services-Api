@@ -52,57 +52,8 @@ final class StudentDAO extends ConexionDB
         }
          
         return $students;
-$studentDAO = new StudentDAO();
-
-$page = 1; // Número de página
-$perPage = 10; // Resultados por página
-
-$students = $studentDAO->GetAllWithPagination($page, $perPage);
-
-foreach ($students as $student) {
-    echo "Registration: " . $student->registration . "<br>";
-    echo "Name: " . $student->name . "<br>";
-    echo "First Last Name: " . $student->p_last_name . "<br>";
-    echo "Second Last Name: " . $student->m_last_name . "<br>";
-    echo "Gender: " . $student->gender . "<br>";
-    echo "Birthday Date: " . $student->birthday_date . "<br>";
-    echo "Ethnicity: " . $student->ethnicity . "<br>";
-    echo "Date of Registration: " . $student->date_of_registration . "<br><br>";
-    }
-    $studentDAO = new StudentDAO();
-
-$page = 1; // Número de página
-$perPage = 10; // Resultados por página
-
-$students = $studentDAO->GetAllWithPagination($page, $perPage);
-
-foreach ($students as $student) {
-    echo "Registration: " . $student->registration . "<br>";
-    echo "Name: " . $student->name . "<br>";
-    echo "First Last Name: " . $student->p_last_name . "<br>";
-    echo "Second Last Name: " . $student->m_last_name . "<br>";
-    echo "Gender: " . $student->gender . "<br>";
-    echo "Birthday Date: " . $student->birthday_date . "<br>";
-    echo "Ethnicity: " . $student->ethnicity . "<br>";
-    echo "Date of Registration: " . $student->date_of_registration . "<br><br>";
-
     }
 
-$studentDAO = new StudentDAO();
-
-$students = $studentDAO->GetAll();
-
-foreach ($students as $student) {
-    echo "Registration: " . $student->registration . "<br>";
-    echo "Name: " . $student->name . "<br>";
-    echo "First Last Name: " . $student->p_last_name . "<br>";
-    echo "Second Last Name: " . $student->m_last_name . "<br>";
-    echo "Gender: " . $student->gender . "<br>";
-    echo "Birthday Date: " . $student->birthday_date . "<br>";
-    echo "Ethnicity: " . $student->ethnicity . "<br>";
-    echo "Date of Registration: " . $student->date_of_registration . "<br><br>";
-}
-    
     public function selectStudentByRegistration($registrationNumber)
     {
         $query = "SELECT * FROM students WHERE registration = :registration";
@@ -122,10 +73,10 @@ foreach ($students as $student) {
             $student->date_of_registration = $row["date_of_registration"];
             return $student;
         } else {
-            return null; // No se encontró ningún estudiante con el número de registro proporcionado
+            return null; 
         }
-}
-}
+    }
+
     public function insertStudent($student)
     {
         $query = "INSERT INTO students (registration, name, p_last_name, m_last_name, gender, birthday_date, origin_place, date_of_registration) 
@@ -159,25 +110,6 @@ foreach ($students as $student) {
         );
         $success = $this->executeQuery($query, $params);
         return $success;
-            
-    $studentDAO = new StudentDAO();
-    
-    $updatedStudent = new Student();
-    $updatedStudent->registration = " "; // El número de registro del estudiante que deseas actualizar
-    $updatedStudent->name = " "; // Nuevo nombre
-    $updatedStudent->p_last_name = " "; // Nuevo primer apellido
-    $updatedStudent->m_last_name = " "; // Nuevo segundo apellido
-    $updatedStudent->gender = " "; // Nuevo género
-    $updatedStudent->birthday_date = " "; // Nueva fecha de nacimiento
-    $updatedStudent->ethnicity = " "; // Nueva etnia
-    $updatedStudent->date_of_registration = " "; // Nueva fecha de registro
-    
-    $updated = $studentDAO->updateStudent($updatedStudent);
-    
-    if ($updated) {
-        echo "Student updated successfully.";
-    } else {
-        echo "Failed to update student.";
     }
     
     public function deleteStudent($registrationNumber)
@@ -187,17 +119,48 @@ foreach ($students as $student) {
         $success = $this->executeQuery($query, $params);
         return $success;
     }
-    
-    $studentDAO = new StudentDAO();
-    
-    $registrationNumberToDelete = " "; // Número de registro del estudiante a eliminar
-    
-    $deleted = $studentDAO->deleteStudent($registrationNumberToDelete);
-    
-    if ($deleted) {
-        echo "Student deleted successfully.";
-    } else {
-        echo "Failed to delete student.";
+
+    public function usageExample()
+    {
+        // Operación de obtener todos los estudiantes
+        $students = $this->getAll();
+        foreach ($students as $student) {
+            echo "Registration: " . $student->registration . "<br>";
+            echo "Name: " . $student->name . "<br>";
+            echo "First Last Name: " . $student->p_last_name . "<br>";
+            echo "Second Last Name: " . $student->m_last_name . "<br>";
+            echo "Gender: " . $student->gender . "<br>";
+            echo "Birthday Date: " . $student->birthday_date . "<br>";
+            echo "Ethnicity: " . $student->ethnicity . "<br>";
+            echo "Date of Registration: " . $student->date_of_registration . "<br><br>";
+        }
+
+        $updatedStudent = new Student();
+        $updatedStudent->registration = "123456"; // El número de registro del estudiante que deseas actualizar
+        $updatedStudent->name = "Nuevo Nombre";
+        $updatedStudent->p_last_name = "Nuevo Apellido";
+        $updatedStudent->m_last_name = "Nuevo Apellido";
+        $updatedStudent->gender = "Femenino";
+        $updatedStudent->birthday_date = "1990-01-01";
+        $updatedStudent->ethnicity = "Nueva Etnia";
+        $updatedStudent->date_of_registration = "2024-01-01";
+
+        $updated = $this->updateStudent($updatedStudent);
+
+        if ($updated) {
+            echo "Student updated successfully.";
+        } else {
+            echo "Failed to update student.";
+        }
+
+        $registrationNumberToDelete = "123456"; // Número de registro del estudiante a eliminar
+
+        $deleted = $this->deleteStudent($registrationNumberToDelete);
+
+        if ($deleted) {
+            echo "Student deleted successfully.";
+        } else {
+            echo "Failed to delete student.";
+        }
     }
-  }
 }
