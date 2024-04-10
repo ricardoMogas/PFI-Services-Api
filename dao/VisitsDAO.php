@@ -49,10 +49,31 @@ final class VisitsDAO extends ConexionDB
     */
     public function GetAllByDate($date)
     {
-        $query = "SELECT * FROM registered_visits WHERE visit_date = $date";
+        $query = "SELECT * FROM registered_visits WHERE visit_date = '$date'";
         $result = $this->getData($query);
         if ($result == null) {
             // echo "No existen registros de visitas el día $date";
+            return false;
+        }
+        $registeredVisits = [];
+        foreach ($result as $row) {
+            $registeredVisit = new RegisteredVisits();
+            foreach ($row as $key => $value) {
+                $registeredVisit->$key = $value;
+            }
+            $registeredVisits[] = $registeredVisit;
+        }
+        return $registeredVisits;
+    }
+    public function GetAllVisistsNotExitToday($date = null)
+    {
+        if ($date === null) {
+            $date = date("Y-m-d");
+        }
+        $query = "SELECT * FROM registered_visits WHERE exit_time IS NULL AND visit_date = '$date'";
+        $result = $this->getData($query);
+        if ($result === []) {
+            // echo "No existen registros de visitas sin salida el día $date";
             return false;
         }
         $registeredVisits = [];
@@ -71,14 +92,19 @@ final class VisitsDAO extends ConexionDB
     */
     public function RegisterNewVisit($registration, $date = null)
     {
+        $resultStudent = $this->getData("SELECT * FROM students WHERE registration = $registration");
+        if ($resultStudent === []) {
+            // echo "No existe el usuario con matricula $registration";
+            return false;
+        }
         if ($date === null) {
             $date = date("Y-m-d");
         }
         $result = $this->getData(
-            "SELECT * FROM registered_visits WHERE registration = $registration AND exit_time IS NULL AND visit_date = $date"
+            "SELECT * FROM registered_visits WHERE registration = $registration AND exit_time IS NULL AND visit_date = '$date'"
         );
         if (($result) !== []) {
-            echo "Ya existe un registro de visita de $registration el día $date";
+            // echo "Ya existe un registro de visita de $registration el día $date";
             return false;
         }
 
@@ -109,10 +135,10 @@ final class VisitsDAO extends ConexionDB
             $date = date("Y-m-d");
         }
         $result = $this->getData(
-            "SELECT * FROM registered_visits WHERE registration = $registration AND exit_time IS NULL AND visit_date = $date"
+            "SELECT * FROM registered_visits WHERE registration = $registration AND exit_time IS NULL AND visit_date = '$date'"
         );
         $resultNotNull = $this->getData(
-            "SELECT * FROM registered_visits WHERE registration = $registration AND exit_time IS NOT NULL AND visit_date = $date"
+            "SELECT * FROM registered_visits WHERE registration = $registration AND exit_time IS NOT NULL AND visit_date = '$date'"
         );
         if (($result) === null) {
             // echo "No existe registro de visita de $registration el día $date";
@@ -149,7 +175,7 @@ final class VisitsDAO extends ConexionDB
                 //echo "No existe el usuario con matricula $resistration";
                 return false;
             }
-            $resultDate = $this->getData("SELECT * FROM registered_visits WHERE registration = $resistration AND visit_date = $date");
+            $resultDate = $this->getData("SELECT * FROM registered_visits WHERE registration = $resistration AND visit_date = '$date'");
             if ($resultDate === []) {
                 //echo "No existe el registro de visita de $resistration el día $date";
                 return false;
