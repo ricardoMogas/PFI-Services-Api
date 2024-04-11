@@ -19,14 +19,9 @@ final class StudentDAO extends ConexionDB
         $students = [];
         foreach ($result as $row) {
             $student = new Student();
-            $student->registration = $row["registration"];
-            $student->name = $row["name"];
-            $student->p_last_name = $row["p_last_name"];
-            $student->m_last_name = $row["m_last_name"];
-            $student->gender = $row["gender"];
-            $student->birthday_date = $row["birthday_date"];
-            $student->ethnicity = $row["origin_place"];
-            $student->date_of_registration = $row["date_of_registration"];
+            foreach ($row as $key => $value) {
+                $student->$key = $value;
+            }
             $students[] = $student;
         }
         return $students;
@@ -40,14 +35,9 @@ final class StudentDAO extends ConexionDB
         $students = [];
         foreach ($result as $row) {
             $student = new Student();
-            $student->registration = $row["registration"];
-            $student->name = $row["name"];
-            $student->p_last_name = $row["p_last_name"];
-            $student->m_last_name = $row["m_last_name"];
-            $student->gender = $row["gender"];
-            $student->birthday_date = $row["birthday_date"];
-            $student->ethnicity = $row["origin_place"];
-            $student->date_of_registration = $row["date_of_registration"];
+            foreach ($row as $key => $value) {
+                $student->$key = $value;
+            }
             $students[] = $student;
         }
          
@@ -164,3 +154,48 @@ final class StudentDAO extends ConexionDB
         }
     }
 }
+// Ejemplo de uso GetAllWithPagination
+/*
+$studentDAO = new StudentDAO();
+$students = $studentDAO->GetAllWithPagination(2, 5);
+foreach ($students as $key => $student) {
+    echo "$key: {$student->name}\n";
+}
+*/
+
+// Ejemplo de uso GetAll
+/*
+$studentDAO = new StudentDAO();
+$students = $studentDAO->GetAll();
+foreach ($students as $key => $student) {
+    echo "$key: {$student->name} : {$student-> p_last_name} : {$student-> status} : {$student-> birthday_date}\n";
+}
+*/
+/* ejemplo de SELECT */
+/*
+    $querySelect = "SELECT * FROM usuarios WHERE id = 1";
+    $resultadoSelect = $conexionDB->getData($querySelect);
+    print_r($resultadoSelect);
+*/
+
+/* ejemplo de INSERT */
+/*
+    $nombre = "Juan";
+    $email = "juan@example.com";
+    $queryInsert = "INSERT INTO usuarios (nombre, email) VALUES (?, ?)";
+    $insertId = $conexionDB->insertDataId($queryInsert, [$nombre, $email]);
+*/
+
+/* ejemplo de UPDATE */
+/*
+    $nuevoNombre = "Pedro";
+    $idActualizar = 2;
+    $queryUpdate = "UPDATE usuarios SET nombre = ? WHERE id = ?";
+    $conexionDB->updateData($queryUpdate, [$nuevoNombre, $idActualizar]);
+*/
+/* ejemplo de DELETE */
+/*
+    $idEliminar = 3;
+    $queryDelete = "DELETE FROM usuarios WHERE id = ?";
+    $conexionDB->deleteData($queryDelete, [$idEliminar]);
+*/
