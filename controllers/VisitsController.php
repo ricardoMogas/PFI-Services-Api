@@ -11,7 +11,7 @@ class VisitsController extends responseData
         ENDPOINT PARA OBTENER TODOS LOS REGISTROS DE VISITAS CON PAGINACIÓN
         /visits?page=1&perPage=3
         ENDPOINT PARA OBTENER LAS VISITAS DEL DIA SIN SALIDA
-        /visits?today=true
+        /visits?todayNotExit=null
     */
     public function doGet(...$params)
     {
