@@ -45,34 +45,51 @@ final class StudentDAO extends ConexionDB
     }
 
     public function SearchStudent(
-        $registration,
         $name = null,
         $p_last_name = null,
         $m_last_name = null,
         $gender = null,
         $birthday_date = null,
+        $ethnicity = null,
+        $career = null,
+        $status = null,
         $origin_place = null,
         $date_of_registration = null
     ) {
-        $query = "SELECT * FROM students WHERE registration = :registration";
-        $params = array(':registration' => $registration);
-        $result = $this->getData($query, $params);
+        $query = "SELECT * FROM students WHERE 1"; // Comienza con una consulta básica
 
-        if ($result) {
-            $row = $result[0];
-            $student = new Student();
-            $student->registration = $row["registration"];
-            $student->name = $row["name"];
-            $student->p_last_name = $row["p_last_name"];
-            $student->m_last_name = $row["m_last_name"];
-            $student->gender = $row["gender"];
-            $student->birthday_date = $row["birthday_date"];
-            $student->ethnicity = $row["origin_place"];
-            $student->date_of_registration = $row["date_of_registration"];
-            return $student;
-        } else {
-            return null;
+        // Construye la consulta SQL y los parámetros según los datos proporcionados
+        if ($name !== null) {
+            $query .= " AND name = '$name'";
         }
+        if ($p_last_name !== null) {
+            $query .= " AND p_last_name = '$p_last_name'";
+        }
+        if ($m_last_name !== null) {
+            $query .= " AND m_last_name = '$m_last_name'";
+        }
+        if ($gender !== null) {
+            $query .= " AND gender = '$gender'";
+        }
+        if ($birthday_date !== null) {
+            $query .= " AND birthday_date = '$birthday_date'";
+        }
+        if ($ethnicity !== null) {
+            $query .= " AND ethnicity = '$ethnicity'";
+        }
+        if ($career !== null) {
+            $query .= " AND career = '$career'";
+        }
+        if ($status !== null) {
+            $query .= " AND status = '$status'";
+        }
+        if ($origin_place !== null) {
+            $query .= " AND origin_place = '$origin_place'";
+        }
+        if ($date_of_registration !== null) {
+            $query .= " AND date_of_registration <= '$date_of_registration'";
+        }
+        return $this->getData($query);
     }
 
     public function InsertStudent($student)
@@ -203,6 +220,16 @@ final class StudentDAO extends ConexionDB
         }
     }
 }
+// USE EXAMPLE SearchStudent
+// $name, $p_last_name, $m_last_name, $gender, $birthday_date, $ethnicity, $career, $status, $origin_place, $date_of_registration
+/*
+$studentDAO = new StudentDAO();
+$student = $studentDAO->SearchStudent(null, null, null, null, null, null, null, null, "Campeche", null);
+foreach ($student as $key => $student) {
+    echo "$key: {$student['name']} : {$student['p_last_name']} : {$student['status']} : {$student['birthday_date']}\n";
+}
+*/
+
 //USE EXAMPLE DeleteStudent
 /*
 $studentDAO = new StudentDAO();
@@ -246,19 +273,6 @@ $student->date_of_registration = "2024-04-11";
 $success = $studentDAO->InsertStudent($student);
 echo $success ? "Student inserted successfully." : "Failed to insert student.";
 */
-
-
-// USE EXAMPLE SearchStudent
-/*
-$studentDAO = new StudentDAO();
-$student = $studentDAO->SearchStudent(123456);
-if ($student) {
-    echo "Name: {$student->name}\n";
-} else {
-    echo "Student not found.\n";
-}
-*/
-
 
 // USE EXAMPLE GetAllWithPagination
 /*
