@@ -80,11 +80,14 @@ class ConexionDB
 
                 $stmt->execute($params);
                 $stmt->close();
+                return true;
             } else {
                 throw new Exception("Solo se permiten consultas INSERT.");
+                return false;
             }
         } catch (Exception $e) {
             throw new Exception("Error al ejecutar el query: " . $e->getMessage());
+            return false;
         }
     }
 
@@ -129,10 +132,13 @@ class ConexionDB
                 }
                 $stmt->execute();
                 $stmt->close();
+                return true;
             } else {
+                return false;
                 throw new Exception("Solo se permiten consultas UPDATE.");
             }
         } catch (Exception $e) {
+            return false;
             throw new Exception("Error al ejecutar el query: " . $e->getMessage());
         }
     }

@@ -169,8 +169,7 @@ final class VisitsDAO extends ConexionDB
             $params = [$no_Visit];
             $this->deleteData($sql, $params);
             return true;
-        }
-        
+        }        
     }
 }
 // PRUEBA DE USO DeleteVisit()
