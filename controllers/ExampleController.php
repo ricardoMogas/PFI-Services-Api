@@ -1,5 +1,4 @@
 <?php
-require_once(__DIR__ . '/../core/conexionDB.php');
 require_once(__DIR__ . "/../core/responseData.class.php");
 
 class ExampleController extends responseData{
