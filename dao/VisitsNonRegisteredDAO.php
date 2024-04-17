@@ -36,7 +36,7 @@ final class VisitsNonRegisteredDAO extends ConexionDB
         $result = $this->getData($query);
         $registeredVisits = [];
         foreach ($result as $row) {
-            $registeredVisit = new RegisteredVisits();
+            $registeredVisit = new UnregisteredVisits();
             foreach ($row as $key => $value) {
                 $registeredVisit->$key = $value;
             }
@@ -57,7 +57,7 @@ final class VisitsNonRegisteredDAO extends ConexionDB
         }
         $registeredVisits = [];
         foreach ($result as $row) {
-            $registeredVisit = new RegisteredVisits();
+            $registeredVisit = new UnregisteredVisits();
             foreach ($row as $key => $value) {
                 $registeredVisit->$key = $value;
             }
@@ -65,6 +65,32 @@ final class VisitsNonRegisteredDAO extends ConexionDB
         }
         return $registeredVisits;
     }
+    /*
+        Función que busca segun la MATRICULA(registration) si existe un registro de visita sin registrar la salida.
+        de HOY siempre.
+    */
+    public function GetAllVisistsNotExitToday($date = null)
+    {
+        if ($date === null) {
+            $date = date("Y-m-d");
+        }
+        $query = "SELECT * FROM unregistered_visits WHERE exit_time IS NULL AND visit_date = '$date'";
+        $result = $this->getData($query);
+        if ($result === []) {
+            // echo "No existen registros de visitas el día $date";
+            return false;
+        }
+        $registeredVisits = [];
+        foreach ($result as $row) {
+            $registeredVisit = new UnregisteredVisits();
+            foreach ($row as $key => $value) {
+                $registeredVisit->$key = $value;
+            }
+            $registeredVisits[] = $registeredVisit;
+        }
+        return $registeredVisits;
+    }
+
     /*
         Función que busca segun la MATRICULA(registration) si existe un registro de visita sin registrar la salida.
         de HOY siempre.
@@ -77,8 +103,12 @@ final class VisitsNonRegisteredDAO extends ConexionDB
         // si hay mas de 5 registros de visitas de una matricula en total no se puede registrar otra visita
         $count = $this->getData("SELECT COUNT(*) FROM unregistered_visits WHERE registration = $registration");
         if ($count[0]['COUNT(*)'] >= 5) {
-            echo "No se puede registrar otra visita, ya hay 5 registros de visitas de $registration";
-            return false;
+            // echo "No se puede registrar otra visita, ya hay 5 registros de visitas de $registration";
+            $result = [
+                "register" => false,
+                "message" => "No se puede registrar otra visita, ya hay 5 registros de visitas de $registration"
+            ];
+            return $result;
         }
 
         $entry_time = date("H:i:s");
@@ -107,10 +137,10 @@ final class VisitsNonRegisteredDAO extends ConexionDB
             $date = date("Y-m-d");
         }
         $results = $this->getData(
-            "SELECT * FROM unregistered_visits WHERE registration = $registration AND exit_time IS NULL AND visit_date = $date"
+            "SELECT * FROM unregistered_visits WHERE registration = $registration AND exit_time IS NULL AND visit_date = '$date'"
         );
         $resultNotNull = $this->getData(
-            "SELECT * FROM unregistered_visits WHERE registration = $registration AND exit_time IS NOT NULL AND visit_date = $date"
+            "SELECT * FROM unregistered_visits WHERE registration = $registration AND exit_time IS NOT NULL AND visit_date = '$date'"
         );
         if ($results === [] || $resultNotNull !== []) {
             // echo " --- No existe registro de visita de $registration el día $date ---";
@@ -158,6 +188,19 @@ final class VisitsNonRegisteredDAO extends ConexionDB
     }
 }
 
+// PRUEBA DE USO GetAllVisistsNotExitToday()
+/*
+$VisitsNonRegisteredDAO = new VisitsNonRegisteredDAO();
+$visits = $VisitsNonRegisteredDAO->GetAllVisistsNotExitToday( $date = date("Y-m-d") );
+if ($visits === false ) {
+    echo "No existen registros";
+} else {
+    foreach ($visits as $key => $visit) {
+        echo "$key: {$visit->registration} : {$visit->entry_time} : {$visit->exit_time} : {$visit->visit_date}\n";
+    }
+}
+*/
+
 // PRUEBA DE USO RegisterExitVisit()
 /*
 $VisitsNonRegisteredDAO = new VisitsNonRegisteredDAO();
@@ -198,14 +241,13 @@ foreach ($visits as $key => $visit) {
         echo "$key: {$visit->registration} : {$visit->entry_time} : {$visit->exit_time} : {$visit->visit_date} ---- \n";
     }
 }
-/*
+*/
 
 // PRUEBA DE USO GetAllWithPaginatio
 /*
- VisitsNonRegisteredDAO = new VisitsNonRegisteredDAO();
-$visits =  VisitsNonRegisteredDAO->GetAllWithPagination(2, 5);
+$VisitsNonRegisteredDAO = new VisitsNonRegisteredDAO();
+$visits =  $VisitsNonRegisteredDAO->GetAllWithPagination(2, 5);
 foreach ($visits as $key => $visit) {
     echo "$key: {$visit->registration} : {$visit->entry_time} > {$visit->exit_time} ------ ";
 }
 */
-
