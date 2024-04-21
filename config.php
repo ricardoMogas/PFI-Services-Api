@@ -7,5 +7,6 @@ define('DB_NAME', 'pfiv3');
 
 
 //otras variables
+define('TOTAL_COPIES', 50);
 define('SITE_NAME', 'ApiCLiente');
 define('API_URL', 'https://api.testdb.com');

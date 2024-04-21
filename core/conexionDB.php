@@ -152,6 +152,7 @@ class ConexionDB
                 $stmt = $this->conexion->prepare($sqlstr);
                 if ($stmt === false) {
                     throw new Exception("Error al preparar la consulta: " . $this->conexion->error);
+                    return false;
                 }
 
                 // Vincular los parámetros y ejecutar la consulta
@@ -160,11 +161,14 @@ class ConexionDB
                 }
                 $stmt->execute();
                 $stmt->close();
+                return true;
             } else {
                 throw new Exception("Solo se permiten consultas DELETE.");
+                return false;
             }
         } catch (Exception $e) {
             throw new Exception("Error al ejecutar el query: " . $e->getMessage());
+            return false;
         }
     }
 }

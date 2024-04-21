@@ -40,7 +40,6 @@ final class StudentDAO extends ConexionDB
             }
             $students[] = $student;
         }
-
         return $students;
     }
 
