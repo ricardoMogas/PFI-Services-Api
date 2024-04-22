@@ -101,18 +101,20 @@ class ConexionDB
                 $stmt = $this->conexion->prepare($sqlstr);
                 if ($stmt === false) {
                     throw new Exception("Error al preparar la consulta: " . $this->conexion->error);
+                    return false;
                 }
 
                 $stmt->execute($params);
                 $insertId = $stmt->insert_id;  // Obtener el ID de la fila insertada
                 $stmt->close();
-
                 return $insertId;
             } else {
                 throw new Exception("Solo se permiten consultas INSERT.");
+                return false;
             }
         } catch (Exception $e) {
             throw new Exception("Error al ejecutar el query: " . $e->getMessage());
+            return false;
         }
     }
 
