@@ -123,7 +123,7 @@ final class CopiesDAO extends ConexionDB
     }
 }
 // USE EXAMPLE DeleteCopie()
-
+/*
 $copiesDAO = new CopiesDAO();
 $susses = $copiesDAO->DeleteCopie(8);
 if ($susses) {
@@ -131,6 +131,7 @@ if ($susses) {
 } else {
     echo "Error al eliminar la copia";
 }
+*/
 
 
 // USE EXAMPLE GetTotalCopies()

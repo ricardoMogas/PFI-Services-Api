@@ -1,7 +1,6 @@
 <?php
 
 require_once(__DIR__ . '/../core/conexionDB.php');
-require_once(__DIR__ . "/../core/responseData.class.php");
 require_once(__DIR__ . "/../models/Student.php");
 
 final class StudentDAO extends ConexionDB

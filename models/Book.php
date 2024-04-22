@@ -1,12 +1,12 @@
 <?php
 class Book {
-    public int $id_Book;
-    public int $id_borrowing;
-    public string $gender;
-    public string $title;
-    public string $publishers;
-    public string $author;
-    public string $status;
+    public $id_Book;
+    public $id_borrowing;
+    public $gender;
+    public $title;
+    public $publishers;
+    public $author;
+    public $status;
     
     public function __construct($id_Book = null, $id_borrowing = null, $gender = null, $title = null, $publishers = null, $author = null, $status = null)
     {

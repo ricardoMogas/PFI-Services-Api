@@ -76,6 +76,7 @@ class ConexionDB
                 $stmt = $this->conexion->prepare($sqlstr);
                 if ($stmt === false) {
                     throw new Exception("Error al preparar la consulta: " . $this->conexion->error);
+                    return false;
                 }
 
                 $stmt->execute($params);

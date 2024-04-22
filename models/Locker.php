@@ -1,10 +1,10 @@
 <?php
 
 class locker {
-    public int $id_locker;
-    public int $id_borrowing;
-    public int $status;
-    public string $description;
+    public $id_locker;
+    public $id_borrowing;
+    public $status;
+    public $description;
     
     public function __construct($id_locker = null, $id_borrowing = null, $status = null, $description = null)
     {
