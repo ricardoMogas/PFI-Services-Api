@@ -105,7 +105,7 @@ class FrontController
 
     public function goToDocs()
     {
-        $classFile = 'example';
+        $classFile = 'ExampleController';
         echo $classFile = __DIR__.'/../controllers/' . $classFile . '.php';
         require_once($classFile);
     }
