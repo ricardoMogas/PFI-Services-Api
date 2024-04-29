@@ -1,5 +1,6 @@
 <?php
 
+
 class FrontController
 {
     private $checkSession = true; // Indica si se debe verificar la sesión
@@ -17,7 +18,7 @@ class FrontController
 
     private function autoload($nameClass)
     {
-        $classFile = __DIR__ .'/controllers/' . $nameClass . '.php';
+        $classFile = __DIR__.'/../controllers/' . $nameClass . '.php';
         if (file_exists($classFile)) {
             include_once $classFile;
         } else {
@@ -104,6 +105,6 @@ class FrontController
 
     public function goToDocs()
     {
-        header('Location: '.__DIR__.'/docs/index.html');
+        header('Location: /PFI-Services-Api/docs/index.html');
     }
 }
