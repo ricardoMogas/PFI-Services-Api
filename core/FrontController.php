@@ -1,5 +1,5 @@
 <?php
-require_once "core/ConexionDB.php";
+
 
 class FrontController
 {
@@ -18,7 +18,7 @@ class FrontController
 
     private function autoload($nameClass)
     {
-        $classFile = './controllers/' . $nameClass . '.php';
+        $classFile = __DIR__.'/../controllers/' . $nameClass . '.php';
         if (file_exists($classFile)) {
             include_once $classFile;
         } else {
@@ -105,6 +105,8 @@ class FrontController
 
     public function goToDocs()
     {
-        header('Location: /PFI-Services-Api/docs/index.html');
+        $classFile = 'example';
+        echo $classFile = __DIR__.'/../controllers/' . $classFile . '.php';
+        require_once($classFile);
     }
 }
