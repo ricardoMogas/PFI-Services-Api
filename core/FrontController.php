@@ -17,7 +17,7 @@ class FrontController
 
     private function autoload($nameClass)
     {
-        $classFile = './controllers/' . $nameClass . '.php';
+        $classFile = __DIR__ .'/controllers/' . $nameClass . '.php';
         if (file_exists($classFile)) {
             include_once $classFile;
         } else {
