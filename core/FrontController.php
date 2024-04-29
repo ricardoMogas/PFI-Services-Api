@@ -80,7 +80,11 @@ class FrontController
         $urlSegments = explode('/', trim($url, '/'));
         $body = json_decode(file_get_contents('php://input'), true);
 
-        echo $urlSegments;
+        foreach ($urlSegments as $key => $value) {
+            if (strpos($value, '?') !== false) {
+                $urlSegments[$key] = strstr($value, '?', true);
+            }
+        }
     }
 
     public function goToDocs()
