@@ -111,7 +111,14 @@ final class StudentDAO extends ConexionDB
     public function InsertStudent($student)
     {
         $valid = true;
-        $requiredFields = ['registration', 'name', 'p_last_name', 'm_last_name', 'gender', 'birthday_date', 'ethnicity', 'career', 'status', 'origin_place', 'date_of_registration'];
+        $requiredFields = ['registration', 'name', 'gender', 'birthday_date', 'ethnicity', 'career', 'status', 'origin_place', 'date_of_registration'];
+
+        $query = "SELECT registration FROM students WHERE registration = $student->registration";
+        $result = $this->getData($query);
+
+        if (count($result) > 0) {
+            return false;
+        }
 
         foreach ($requiredFields as $field) {
             if (!isset($student->$field) || empty($student->$field)) {
