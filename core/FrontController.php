@@ -81,9 +81,7 @@ class FrontController
         $body = json_decode(file_get_contents('php://input'), true);
 
         foreach ($urlSegments as $key => $value) {
-            if (strpos($value, '?') !== false) {
-                $urlSegments[$key] = strstr($value, '?', true);
-            }
+           echo $key . ' ' . $value . '<br>';
         }
     }
 
