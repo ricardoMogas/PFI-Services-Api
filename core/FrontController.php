@@ -104,6 +104,6 @@ class FrontController
 
     public function goToDocs()
     {
-        header('Location: /PFI-Services-Api/docs/index.html');
+        header('Location: '.__DIR__.'/docs/index.html');
     }
 }
