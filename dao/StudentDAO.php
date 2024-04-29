@@ -41,8 +41,17 @@ final class StudentDAO extends ConexionDB
         }
         return $students;
     }
+    public function GetTotalStudents()
+    {
+        $query = "SELECT COUNT(*) as total FROM students";
+        $result = $this->getData($query);
+        return $result[0]['total'];
+    }
 
     public function SearchStudent(
+        $page = 1,
+        $perPage = 10,
+        $registration = null,
         $name = null,
         $p_last_name = null,
         $m_last_name = null,
@@ -57,14 +66,17 @@ final class StudentDAO extends ConexionDB
         $query = "SELECT * FROM students WHERE 1"; // Comienza con una consulta básica
 
         // Construye la consulta SQL y los parámetros según los datos proporcionados
+        if ($registration !== null) {
+            $query .= " AND registration LIKE '%$registration%'";
+        }
         if ($name !== null) {
-            $query .= " AND name = '$name'";
+            $query .= " AND name LIKE '%$name%'";
         }
         if ($p_last_name !== null) {
-            $query .= " AND p_last_name = '$p_last_name'";
+            $query .= " AND p_last_name LIKE '%$p_last_name%'";
         }
         if ($m_last_name !== null) {
-            $query .= " AND m_last_name = '$m_last_name'";
+            $query .= " AND m_last_name LIKE '%$m_last_name%'";
         }
         if ($gender !== null) {
             $query .= " AND gender = '$gender'";
@@ -86,6 +98,12 @@ final class StudentDAO extends ConexionDB
         }
         if ($date_of_registration !== null) {
             $query .= " AND date_of_registration <= '$date_of_registration'";
+        }
+        if ($page !== null && $perPage !== null) {
+            $offset = ($page - 1) * $perPage;
+            $query .= " LIMIT $offset, $perPage";
+        } else {
+            return "no hagas eso bro";
         }
         return $this->getData($query);
     }
