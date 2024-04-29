@@ -24,3 +24,4 @@ $token = array(
 $jwt = JWT::encode($token, $secret_key);
 echo $jwt;
 */
+echo "hello world";
