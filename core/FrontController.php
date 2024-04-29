@@ -80,13 +80,33 @@ class FrontController
         $urlSegments = explode('/', trim($url, '/'));
         $body = json_decode(file_get_contents('php://input'), true);
 
-        echo $url;
+        switch ($method) {
+            case 'GET':
+                $action = 'doGet';
+                echo json_encode($this->goToController($url, $urlSegments, $action, $body));
+                break;
+            case 'POST':
+                $action = 'doPost';
+                echo json_encode($this->goToController($url, $urlSegments, $action, $body));
+                break;
+            case 'PUT':
+                $action = 'doPut';
+                echo json_encode($this->goToController($url, $urlSegments, $action, $body));
+                break;
+            case 'DELETE':
+                $action = 'doDelete';
+                echo json_encode($this->goToController($url, $urlSegments, $action, $body));
+                break;
+            default:
+                echo json_encode(['error' => '404', 'error_msg' => 'Método no permitido']);
+                break;
+        }
     }
 
     public function goToDocs()
     {
-        $classFile = 'ExampleController';
-        echo $classFile = __DIR__.'/../controllers/' . $classFile . '.php';
+        $nameClass = 'ExampleController';
+        echo $classFile = dirname(__DIR__).'/controllers/' . $nameClass . '.php';
         require_once($classFile);
     }
 }
