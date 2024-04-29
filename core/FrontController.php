@@ -4,9 +4,11 @@
 class FrontController
 {
     private $checkSession = true; // Indica si se debe verificar la sesión
+    public $inFolder = false; // Indica si el proyecto está en una carpeta
 
-    public function __construct()
+    public function __construct($inFolder = false)
     {
+        $this->inFolder = $inFolder;
         spl_autoload_register([$this, 'autoload']);
         $this->handleRouting();
     }
@@ -29,7 +31,8 @@ class FrontController
     private function goToController($url, $urlSegments, $action, $body)
     {
         $params = array();
-        $NameComplete = !empty($urlSegments[1]) ? ucfirst($urlSegments[1]) : 'Help';
+        $numberOfSegments = $this->inFolder ? 1 : 0;
+        $NameComplete = !empty($urlSegments[$numberOfSegments]) ? ucfirst($urlSegments[$numberOfSegments]) : 'Help';
         // si es nameComplete es igual a Help, entonces se redirige a la página de ayuda
         if ($NameComplete == 'Help') {
             $this->goToDocs();
@@ -75,7 +78,7 @@ class FrontController
     private function handleRouting()
     {
         $url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
-        $action = !empty($urlSegments[2]) ? $urlSegments[2] : 'index'; //ya no uso los segmentes para la acción REVISAR 
+        $action = "index";
         $method = $_SERVER['REQUEST_METHOD'];
         $urlSegments = explode('/', trim($url, '/'));
         $body = json_decode(file_get_contents('php://input'), true);

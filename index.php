@@ -7,7 +7,12 @@
 require_once(__DIR__ . '/core/FrontController.php');
 
 // Crear una instancia de la clase FrontController
-$frontController = new FrontController();
+/*
+!!!!! IMPORTANTE !!!!!
+Si el proyecto está en una carpeta, entonces se debe pasar el valor true
+al constructor del FrontController.
+*/
+$frontController = new FrontController($inFolder = true);
 
 // crear una pagina
 
