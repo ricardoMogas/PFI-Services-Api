@@ -90,7 +90,6 @@ class StudentsController extends responseData
             "data" => $result,
         );
         return parent::sendJsonResponse("ok", $response);
-
     }
 
     /*
@@ -134,4 +133,35 @@ class StudentsController extends responseData
         $result = $studentDAO->InsertStudent($student);
         return parent::sendJsonResponse("ok", $result);
     }
+
+    public function doPut(...$params)
+    {
+        if (!isset($params["registration"]) || !isset($params["name"]) || !isset($params["gender"]) ||
+            !isset($params["birthday_date"]) || !isset($params["ethnicity"]) || !isset($params["career"]) ||
+            !isset($params["status"]) || !isset($params["origin_place"])) {
+            return parent::error_400("Faltan datos obligatorios");
+        }
+
+        $studentDAO = new StudentDAO();
+        $student = new Student();
+        $student->registration = $params["registration"];
+        $student->name = $params["name"];
+        $student->p_last_name = "";
+        $student->m_last_name = "";
+        $student->gender = $params["gender"];
+        $student->birthday_date = $params["birthday_date"];
+        $student->ethnicity = $params["ethnicity"];
+        $student->career = $params["career"];
+        $student->status = $params["status"];
+        $student->origin_place = $params["origin_place"];
+        $student->date_of_registration = date("Y-m-d");
+
+        $result = $studentDAO->UpdateStudent($student);
+        return parent::sendJsonResponse("ok", $result);
+    }
+    
+    public function doDelete(...$params)
+    {
+    }
 }
+
