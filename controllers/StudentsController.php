@@ -120,8 +120,8 @@ class StudentsController extends responseData
         $student = new Student();
         $student->registration = $params["registration"];
         $student->name = $params["name"];
-        $student->p_last_name = "";
-        $student->m_last_name = "";
+        $student->p_last_name = "N/A";
+        $student->m_last_name = "N/A";
         $student->gender = $params["gender"];
         $student->birthday_date = $params["birthday_date"];
         $student->ethnicity = $params["ethnicity"];
@@ -133,7 +133,20 @@ class StudentsController extends responseData
         $result = $studentDAO->InsertStudent($student);
         return parent::sendJsonResponse("ok", $result);
     }
-
+    /*
+     * ENDPOINT > /students
+     * body:
+    {
+        "registration" : "66209",
+        "name" : "Alvira Jesus Hidalgo pech",
+        "gender" : "Mujer",
+        "birthday_date" : "2001-10-29",
+        "ethnicity" : "Otro",
+        "career" : "ISC",
+        "status" : "Activo",
+        "origin_place" : "Campeche"
+    }
+    */
     public function doPut(...$params)
     {
         if (!isset($params["registration"]) || !isset($params["name"]) || !isset($params["gender"]) ||
@@ -146,8 +159,8 @@ class StudentsController extends responseData
         $student = new Student();
         $student->registration = $params["registration"];
         $student->name = $params["name"];
-        $student->p_last_name = "";
-        $student->m_last_name = "";
+        $student->p_last_name = "N/A";
+        $student->m_last_name = "N/A";
         $student->gender = $params["gender"];
         $student->birthday_date = $params["birthday_date"];
         $student->ethnicity = $params["ethnicity"];
@@ -159,9 +172,19 @@ class StudentsController extends responseData
         $result = $studentDAO->UpdateStudent($student);
         return parent::sendJsonResponse("ok", $result);
     }
+    /*
+        * ENDPOINT > /students?registration=12345
+    */
     
     public function doDelete(...$params)
     {
+        if (!isset($params["registration"])) {
+            return parent::error_400("No enviaste el parametro registration");
+        }
+
+        $studentDAO = new StudentDAO();
+        $result = $studentDAO->DeleteStudent($params["registration"]);
+        return parent::sendJsonResponse("ok", $result);
     }
 }
 

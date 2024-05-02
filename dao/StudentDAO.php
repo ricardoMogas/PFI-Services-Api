@@ -157,6 +157,7 @@ final class StudentDAO extends ConexionDB
         // Construct the SQL query for updating the student record
         $query = "UPDATE `students` SET `name`=?, `p_last_name`=?, `m_last_name`=?, `gender`=?, `birthday_date`=?, `ethnicity`=?, `career`=?, `status`=?, `origin_place`=?, `date_of_registration`=? WHERE `registration`=?";
 
+        
         // Set the parameters for the prepared statement
         $params = [
             $student->name,
@@ -179,6 +180,11 @@ final class StudentDAO extends ConexionDB
 
     public function DeleteStudent($registration)
     {
+        $sqlStudent = "SELECT * FROM students WHERE registration = $registration";
+        $result = $this->getData($sqlStudent);
+        if (count($result) == 0) {
+            return "No existe el estudiante";
+        }
         // Verificar si la matrícula no está vacía
         if (!empty($registration)) {
             // Construir la consulta SQL de eliminación para eliminar el estudiante con la matrícula proporcionada

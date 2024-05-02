@@ -1,0 +1,335 @@
+{
+	"info": {
+		"_postman_id": "0de9a36e-37f8-44e1-bd32-9a73febeaf81",
+		"name": "PFI API SERVICE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33042838"
+	},
+	"item": [
+		{
+			"name": "Visitas_No_Registrados",
+			"item": [
+				{
+					"name": "Entradas de Hoy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/nonRegVisits?todayNotExit=null",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"nonRegVisits"
+							],
+							"query": [
+								{
+									"key": "todayNotExit",
+									"value": "null"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Todas las entradas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/nonRegVisits?page=1&perPage=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"nonRegVisits"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "perPage",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar Entrada",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/nonRegVisits?matricula=66205",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"nonRegVisits"
+							],
+							"query": [
+								{
+									"key": "matricula",
+									"value": "66205"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar salida",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/nonRegVisits?matricula=66209",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"nonRegVisits"
+							],
+							"query": [
+								{
+									"key": "matricula",
+									"value": "66209"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Visitas",
+			"item": [
+				{
+					"name": "Registrar salida",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"message\" : [1, 2, 3],\r\n    \"data\" : {\r\n        \"name\" : \"Ricardo\",\r\n        \"lastName\" : \"Moo\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/visits?matricula=66208",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"visits"
+							],
+							"query": [
+								{
+									"key": "matricula",
+									"value": "66208"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Entradas de Hoy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/visits?todayNotExit=null",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"visits"
+							],
+							"query": [
+								{
+									"key": "todayNotExit",
+									"value": "null"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar Entrada",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/visits?matricula=66208",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"visits"
+							],
+							"query": [
+								{
+									"key": "matricula",
+									"value": "66208"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "Obtener todos los usuarios",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"registration\" : \"null\",\r\n    \"name\" : \"null\",\r\n    \"gender\" : \"null\",\r\n    \"ethnicity\" : \"null\",\r\n    \"career\" : \"null\",\r\n    \"status\" : \"null\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/students?page=1&perPage=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"students"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "perPage",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registra estudiante",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"registration\" : \"12345\",\r\n    \"name\" : \"test2\",\r\n    \"gender\" : \"Mujer\",\r\n    \"birthday_date\" : \"2001-10-28\",\r\n    \"ethnicity\" : \"Otro\",\r\n    \"career\" : \"IE\",\r\n    \"status\" : \"Activo\",\r\n    \"origin_place\" : \"Campeche\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Estudiante",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"registration\" : \"66209\",\r\n    \"name\" : \"Alvira Jesus Hidalgo pech\",\r\n    \"gender\" : \"Mujer\",\r\n    \"birthday_date\" : \"2001-10-29\",\r\n    \"ethnicity\" : \"Otro\",\r\n    \"career\" : \"ISC\",\r\n    \"status\" : \"Activo\",\r\n    \"origin_place\" : \"Campeche\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/students",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Alumno",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/students?registration=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"students"
+							],
+							"query": [
+								{
+									"key": "registration",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
