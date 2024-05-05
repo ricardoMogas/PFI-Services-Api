@@ -21,8 +21,5 @@ define('locker_name', "locker");
 
 //otras variables
 define('TOTAL_COPIES', 50);
-define('OCUPATE_NAME', 'Ocupado');
-define('FREE_NAME', 'Libre');
-define('OUT_OF_SERVICE_NAME', 'Fuera de servicio');
-define('SITE_NAME', 'ApiCLiente');
-define('API_URL', 'https://api.testdb.com');
+define('NAME_MALE', 'Hombre');
+define('NAME_FEMALE', 'Mujer');
