@@ -255,7 +255,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"registration\" : \"12345\",\r\n    \"name\" : \"test2\",\r\n    \"gender\" : \"Mujer\",\r\n    \"birthday_date\" : \"2001-10-28\",\r\n    \"ethnicity\" : \"Otro\",\r\n    \"career\" : \"IE\",\r\n    \"status\" : \"Activo\",\r\n    \"origin_place\" : \"Campeche\"\r\n}",
+							"raw": "{\r\n    \"registration\" : \"1\",\r\n    \"name\" : \"delete1\",\r\n    \"gender\" : \"delete1\",\r\n    \"birthday_date\" : \"2001-10-28\",\r\n    \"ethnicity\" : \"Otro\",\r\n    \"career\" : \"IE\",\r\n    \"status\" : \"Activo\",\r\n    \"origin_place\" : \"Campeche\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "text"
@@ -310,7 +310,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost/PFI-Services-Api/students?registration=",
+							"raw": "http://localhost/PFI-Services-Api/students?registration=12",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -322,7 +322,76 @@
 							"query": [
 								{
 									"key": "registration",
-									"value": ""
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Copies",
+			"item": [
+				{
+					"name": "Obtener copias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/Copies?registration=66208",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"Copies"
+							],
+							"query": [
+								{
+									"key": "registration",
+									"value": "66208"
+								},
+								{
+									"key": "date",
+									"value": "2024-02-14",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NewCopie",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/Copies?registration=66208&total=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"Copies"
+							],
+							"query": [
+								{
+									"key": "registration",
+									"value": "66208"
+								},
+								{
+									"key": "total",
+									"value": "1"
+								},
+								{
+									"key": "date",
+									"value": "null",
+									"disabled": true
 								}
 							]
 						}
