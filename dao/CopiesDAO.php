@@ -74,6 +74,7 @@ final class CopiesDAO extends ConexionDB
 
         $dateQuery = "SELECT * FROM copies WHERE date = '$date'";
         $resultDate = $this->getData($dateQuery);
+
         if ( count($resultDate) > 0 ) {
             // return "Ya existe una copia para esta fecha sumar a la existente";
             $queryUpdate = "UPDATE copies SET total = total + ? WHERE date = ?";
@@ -90,7 +91,7 @@ final class CopiesDAO extends ConexionDB
     * Obtiene el total de copias en la base de datos
     * Si se especifica un registro se obtiene el total de copias de ese registro
     */
-    public function GetTotalCopies($registration = null)
+    public function GetTotalCopiesStudent($registration = null, $date = null)
     {
         $registrationQuery = "SELECT * FROM students WHERE registration = '$registration'";
         $resultRegistration = $this->getData($registrationQuery);
@@ -98,14 +99,31 @@ final class CopiesDAO extends ConexionDB
             return "Estudiante no registrado";
         }
 
-        if ($registration === null) {
-            $query = "SELECT SUM(total) as total FROM copies";
+        if ( $date == null ) {
+            $date = date('Y-m-d');
+        }
+
+        if ( $registration == null ) {
+            $query = "SELECT * FROM copies WHERE MONTH(date) = MONTH('$date') AND YEAR(date) = YEAR('$date')";
             $result = $this->getData($query);
-            return $result[0]['total'];
+            $total = 0;
+            foreach ($result as $row) {
+                $total += $row['total'];
+            }
+            return $total;
+        }
+
+        $dateMonth = "SELECT * FROM copies WHERE MONTH(date) = MONTH('$date') AND YEAR(date) = YEAR('$date') AND registration = '$registration'";
+        $resultDateMonth = $this->getData($dateMonth);
+        
+        if ( count($resultDateMonth) == 0 ) {
+            return "No tiene copias o impresiones hechas en este mes";
         } else {
-            $query = "SELECT SUM(total) as total FROM copies WHERE registration = $registration";
-            $result = $this->getData($query);
-            return $result[0]['total'];
+            $total = 0;
+            foreach ($resultDateMonth as $row) {
+                $total += $row['total'];
+            }
+            return $total;
         }
     }
 
@@ -134,12 +152,13 @@ if ($susses) {
 */
 
 
-// USE EXAMPLE GetTotalCopies()
+// USE EXAMPLE GetTotalCopiesStudent()
 /*
 $copiesDAO = new CopiesDAO();
-$total = $copiesDAO->GetTotalCopies(66208);
+$total = $copiesDAO->GetTotalCopiesStudent('66208');
 echo "Total de copias: $total";
 */
+
 
 // USE EXAMPLE InsertCopie()
 /*
