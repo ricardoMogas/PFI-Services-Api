@@ -399,6 +399,68 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Graficas",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\" : \"Licenciatura\",\r\n    \"typeFrequency\": null,\r\n    \"startDate\": null,\r\n    \"endDate\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/PFI-Services-Api/Graph",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"PFI-Services-Api",
+						"Graph"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reportes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\" : \"Visitas\",\r\n    \"typeFrequency\": null,\r\n    \"startDate\": null,\r\n    \"endDate\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/PFI-Services-Api/Report",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"PFI-Services-Api",
+						"Report"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
