@@ -1,9 +1,9 @@
 <?php
 //variables de la base de datos
-define('DB_HOST', 'localhost');
+define('DB_HOST', 'roundhouse.proxy.rlwy.net');
 define('DB_USERNAME', 'root');
-define('DB_PASSWORD', '');
-define('DB_NAME', 'pfiv3');
+define('DB_PASSWORD', 'DtPQUqEtfXIoVVjjISychOzpFQRKuoxm');
+define('DB_NAME', 'railway');
 
 // Type_borrowing (tipo de prestamo)
 /*
