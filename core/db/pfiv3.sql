@@ -3,13 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-04-2024 a las 02:29:15
+-- Tiempo de generación: 10-05-2024 a las 05:04:37
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -183,7 +183,8 @@ INSERT INTO `registered_visits` (`no_Visit`, `registration`, `entry_time`, `exit
 (22, 66208, '01:10:45.000000', '01:26:41.000000', '2024-04-11'),
 (23, 66208, '01:10:46.000000', '01:26:41.000000', '2024-04-11'),
 (24, 66208, '03:19:42.000000', '03:24:50.000000', '2024-04-16'),
-(25, 66208, '22:23:18.000000', '22:24:00.000000', '2024-04-17');
+(25, 66208, '22:23:18.000000', '22:24:00.000000', '2024-04-17'),
+(26, 66208, '16:41:42.000000', '16:45:58.000000', '2024-05-08');
 
 -- --------------------------------------------------------
 
@@ -210,15 +211,18 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`registration`, `name`, `p_last_name`, `m_last_name`, `gender`, `birthday_date`, `ethnicity`, `career`, `status`, `origin_place`, `date_of_registration`) VALUES
+(1231, 'TEST', 'N/A', 'N/A', 'Hombre', '2024-05-09', 'Otomi', 'ISC', 'Baja temporal', 'asdf', '2024-05-10'),
+(12312, 'TEST1', 'N/A', 'N/A', 'Hombre', '2024-05-09', 'Otomi', 'ISC', 'Baja temporal', 'asdf', '2024-05-10'),
 (62231, 'Ricardo Arian', 'Puc', 'Duran', 'Hombre', '2003-05-14', 'Otro', 'ISC', 'Activo', 'Campeche', '2023-06-09'),
 (66132, 'Angel Gabriel', 'Manrero', 'Hidalgo', 'Hombre', '2002-04-16', 'Otro', 'ISC', 'Activo', 'Campeche', '2021-02-03'),
 (66208, 'Ricardo de jesus', 'Moo', 'Vargas', 'Hombre', '2001-10-29', 'Otro', 'ISC', 'Activo', 'Campeche', '2021-03-03'),
+(66209, 'Alvira Jesus Hidalgo pech', '', '', 'Mujer', '2001-10-28', 'Otro', 'ISC', 'Activo', 'Campeche', '2024-04-29'),
 (66915, 'Jorge Francisco', 'Dzul', 'Cobos', 'Hombre', '2002-10-28', 'Otro', 'ISC', 'Activo', 'Campeche', '2021-07-02'),
 (68322, 'Gael Alexander', 'Carrillo', 'Chan', 'Hombre', '2003-12-28', 'Otro', 'ISC', 'Activo', 'Campeche', '2022-11-15'),
 (68355, 'Axel Alessandro', 'Chávez', 'Moreno', 'Hombre', '2003-10-18', 'Otro', 'ISC', 'Activo', 'Campeche', '2023-03-31'),
 (68627, 'Arturo Alberto', 'Zavala', 'Morales', 'Hombre', '2002-12-06', 'Otro', 'ISC', 'Activo', 'Carmen', '2023-07-06'),
 (69951, 'Uriel Isai', 'Landeros', 'Mijangos', 'Hombre', '2003-09-30', 'Otro', 'ISC', 'Activo', 'Campeche', '2023-04-03'),
-(0, 'testawa', 'test2', 'test2', 'Hombre', '1990-01-01', 'Otro', 'ISC', 'Activo', 'Campeche', '2024-04-11');
+(69952, 'testawa', 'test2', 'test2', 'Hombre', '1990-01-01', 'Otro', 'ISC', 'Activo', 'Campeche', '2024-04-11');
 
 -- --------------------------------------------------------
 
@@ -270,7 +274,10 @@ INSERT INTO `unregistered_visits` (`no_Visit`, `registration`, `entry_time`, `ex
 (9, 66209, '22:40:45.000000', '22:55:09.000000', '2024-04-17'),
 (10, 66209, '22:40:55.000000', '22:55:09.000000', '2024-04-17'),
 (11, 66209, '22:40:58.000000', '22:55:09.000000', '2024-04-17'),
-(12, 66209, '22:41:02.000000', '22:55:09.000000', '2024-04-17');
+(12, 66209, '22:41:02.000000', '22:55:09.000000', '2024-04-17'),
+(13, 66205, '16:46:12.000000', NULL, '2024-05-08'),
+(14, 66205, '16:34:02.000000', '16:35:37.000000', '2024-05-09'),
+(15, 66205, '16:34:08.000000', '16:35:37.000000', '2024-05-09');
 
 --
 -- Índices para tablas volcadas
@@ -280,31 +287,50 @@ INSERT INTO `unregistered_visits` (`no_Visit`, `registration`, `entry_time`, `ex
 -- Indices de la tabla `book`
 --
 ALTER TABLE `book`
-  ADD PRIMARY KEY (`id_Book`);
+  ADD PRIMARY KEY (`id_Book`),
+  ADD KEY `id_borrowing` (`id_borrowing`);
+
+--
+-- Indices de la tabla `borrowing`
+--
+ALTER TABLE `borrowing`
+  ADD PRIMARY KEY (`id_borrowing`) USING BTREE,
+  ADD KEY `registration_fkey` (`registration`) USING BTREE,
+  ADD KEY `type_borrowing` (`type_borrowing`);
 
 --
 -- Indices de la tabla `computer`
 --
 ALTER TABLE `computer`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_borrowing` (`id_borrowing`);
 
 --
 -- Indices de la tabla `copies`
 --
 ALTER TABLE `copies`
-  ADD PRIMARY KEY (`registration_number`);
+  ADD PRIMARY KEY (`registration_number`) USING BTREE,
+  ADD KEY `registration` (`registration`);
 
 --
 -- Indices de la tabla `locker`
 --
 ALTER TABLE `locker`
-  ADD PRIMARY KEY (`id_locker`);
+  ADD PRIMARY KEY (`id_locker`),
+  ADD KEY `id_borrowing` (`id_borrowing`) USING BTREE;
 
 --
 -- Indices de la tabla `registered_visits`
 --
 ALTER TABLE `registered_visits`
-  ADD PRIMARY KEY (`no_Visit`);
+  ADD PRIMARY KEY (`no_Visit`) USING BTREE,
+  ADD KEY `registration_fk` (`registration`) USING BTREE;
+
+--
+-- Indices de la tabla `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`registration`);
 
 --
 -- Indices de la tabla `type_borrowing`
@@ -329,6 +355,12 @@ ALTER TABLE `book`
   MODIFY `id_Book` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
+-- AUTO_INCREMENT de la tabla `borrowing`
+--
+ALTER TABLE `borrowing`
+  MODIFY `id_borrowing` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT de la tabla `computer`
 --
 ALTER TABLE `computer`
@@ -344,7 +376,13 @@ ALTER TABLE `copies`
 -- AUTO_INCREMENT de la tabla `registered_visits`
 --
 ALTER TABLE `registered_visits`
-  MODIFY `no_Visit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `no_Visit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT de la tabla `students`
+--
+ALTER TABLE `students`
+  MODIFY `registration` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69953;
 
 --
 -- AUTO_INCREMENT de la tabla `type_borrowing`
@@ -356,7 +394,48 @@ ALTER TABLE `type_borrowing`
 -- AUTO_INCREMENT de la tabla `unregistered_visits`
 --
 ALTER TABLE `unregistered_visits`
-  MODIFY `no_Visit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `no_Visit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `book`
+--
+ALTER TABLE `book`
+  ADD CONSTRAINT `book_ibfk_1` FOREIGN KEY (`id_borrowing`) REFERENCES `borrowing` (`id_borrowing`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `borrowing`
+--
+ALTER TABLE `borrowing`
+  ADD CONSTRAINT `borrowing_ibfk_1` FOREIGN KEY (`registration`) REFERENCES `students` (`registration`),
+  ADD CONSTRAINT `borrowing_ibfk_2` FOREIGN KEY (`type_borrowing`) REFERENCES `type_borrowing` (`id_type`);
+
+--
+-- Filtros para la tabla `computer`
+--
+ALTER TABLE `computer`
+  ADD CONSTRAINT `computer_ibfk_1` FOREIGN KEY (`id_borrowing`) REFERENCES `borrowing` (`id_borrowing`);
+
+--
+-- Filtros para la tabla `copies`
+--
+ALTER TABLE `copies`
+  ADD CONSTRAINT `copies_ibfk_1` FOREIGN KEY (`registration`) REFERENCES `students` (`registration`);
+
+--
+-- Filtros para la tabla `locker`
+--
+ALTER TABLE `locker`
+  ADD CONSTRAINT `locker_ibfk_1` FOREIGN KEY (`id_borrowing`) REFERENCES `borrowing` (`id_borrowing`);
+
+--
+-- Filtros para la tabla `registered_visits`
+--
+ALTER TABLE `registered_visits`
+  ADD CONSTRAINT `registered_visits_ibfk_1` FOREIGN KEY (`registration`) REFERENCES `students` (`registration`) ON DELETE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
