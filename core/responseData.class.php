@@ -1,5 +1,6 @@
 <?php
 // Habilitar CORS
+header("Content-Type: application/json");
 class responseData {
 
     private $response = [
