@@ -1,11 +1,11 @@
 <?php
 
 require_once(__DIR__ . '/../core/conexionDB.php');
-require_once(__DIR__ . "/../core/responseData.class.php");
 require_once(__DIR__ . "/../models/Student.php");
 
 final class StudentDAO extends ConexionDB
 {
+
     public function __construct()
     {
         parent::__construct();
@@ -42,7 +42,6 @@ final class StudentDAO extends ConexionDB
         return $students;
     }
 }
-
 // Ejemplo de uso GetAllWithPagination
 /*
 $studentDAO = new StudentDAO();
@@ -54,11 +53,13 @@ foreach ($students as $key => $student) {
 */
 
 // Ejemplo de uso GetAll
+
 $studentDAO = new StudentDAO();
 $students = $studentDAO->GetAll();
 foreach ($students as $key => $student) {
     echo "$key: {$student->name} : {$student-> p_last_name} : {$student-> status} : {$student-> birthday_date}\n";
 }
+
 
 /* ejemplo de SELECT */
 /*
