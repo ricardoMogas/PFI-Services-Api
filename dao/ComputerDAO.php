@@ -80,6 +80,12 @@ class ComputerDAO extends ConexionDB
         if (count($result) == 0){
             return false;
         }
+        // si es null el $id_borrowing se actualiza a null
+        if ($id_borrowing == null){
+            $query = "UPDATE computer SET id_borrowing = ? WHERE id = ?";
+            $params = [null, $id];
+            return $this->updateData($query, $params);
+        }
 
         $query = "UPDATE computer SET id_borrowing = ? WHERE id = ?";
         $params = [$id_borrowing, $id];

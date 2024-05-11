@@ -80,6 +80,12 @@ class BookDAO extends ConexionDB
         if (count($result) == 0){
             return false;
         }
+        // si es null el $id_borrowing se actualiza a null
+        if ($id_borrowing == null){
+            $query = "UPDATE book SET id_borrowing = ? WHERE id_Book = ?";
+            $params = [null, $id_Book];
+            return $this->updateData($query, $params);
+        }
 
         $query = "UPDATE book SET id_borrowing = ? WHERE id_Book = ?";
         $params = [$id_borrowing, $id_Book];
