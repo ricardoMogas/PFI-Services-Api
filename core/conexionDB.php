@@ -67,7 +67,6 @@ class ConexionDB
         }
     }
 
-    // Método para ejecutar una consulta INSERT
     public function insertData($sqlstr, $params)
     {
         try {
@@ -79,7 +78,10 @@ class ConexionDB
                     return false;
                 }
 
-                $stmt->execute($params);
+                // Bind parameters
+                $stmt->bind_param(str_repeat('s', count($params)), ...$params);
+
+                $stmt->execute();
                 $stmt->close();
                 return true;
             } else {
@@ -104,7 +106,10 @@ class ConexionDB
                     return false;
                 }
 
-                $stmt->execute($params);
+                // Bind parameters
+                $stmt->bind_param(str_repeat('s', count($params)), ...$params);
+
+                $stmt->execute();
                 $insertId = $stmt->insert_id;  // Obtener el ID de la fila insertada
                 $stmt->close();
                 return $insertId;

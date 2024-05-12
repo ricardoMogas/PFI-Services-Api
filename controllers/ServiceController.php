@@ -183,7 +183,7 @@ class ServiceController extends responseData
                 if ($resultLockerStatus == false) {
                     return parent::sendJsonResponse("error", "Locker status not updated");
                 }
-                $resultUpdateDate = $borrowingDAO->UpdateBorrowing($params["id_borrowing"], null, null, null, date("Y-m-d H:i:s"));
+                $resultUpdateDate = $borrowingDAO->UpdateBorrowing($locker->id_borrowing, null, null, null, date("Y-m-d H:i:s"));
                 return parent::sendJsonResponse("ok", $resultLockerStatus && $resultUpdateDate);
                 break;
             case "computer":
@@ -195,7 +195,7 @@ class ServiceController extends responseData
                 if ($resultComputerStatus == false) {
                     return parent::sendJsonResponse("error", "Computer status not updated");
                 }
-                $resultUpdateDate = $borrowingDAO->UpdateBorrowing($params["id_borrowing"], null, null, null, date("Y-m-d H:i:s"));
+                $resultUpdateDate = $borrowingDAO->UpdateBorrowing($computer->id_borrowing, null, null, null, date("Y-m-d H:i:s"));
                 return parent::sendJsonResponse("ok", $resultComputerStatus && $resultUpdateDate);
                 break;
             case "book":
