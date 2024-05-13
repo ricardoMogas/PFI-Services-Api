@@ -220,12 +220,12 @@
 							"raw": "{\r\n    \"registration\" : \"null\",\r\n    \"name\" : \"null\",\r\n    \"gender\" : \"null\",\r\n    \"ethnicity\" : \"null\",\r\n    \"career\" : \"null\",\r\n    \"status\" : \"null\"\r\n}",
 							"options": {
 								"raw": {
-									"language": "text"
+									"language": "json"
 								}
 							}
 						},
 						"url": {
-							"raw": "http://localhost/PFI-Services-Api/students?page=1&perPage=10",
+							"raw": "http://localhost/PFI-Services-Api/students?page=1&perPage=5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -241,7 +241,7 @@
 								},
 								{
 									"key": "perPage",
-									"value": "10"
+									"value": "5"
 								}
 							]
 						}
@@ -328,6 +328,44 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Busqueda",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"registration\" : \"null\",\r\n    \"name\" : \"Ricardo\",\r\n    \"gender\" : \"null\",\r\n    \"ethnicity\" : \"null\",\r\n    \"career\" : \"null\",\r\n    \"status\" : \"null\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/SearchStudent?page=1&perPage=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"SearchStudent"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "perPage",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -392,6 +430,93 @@
 									"key": "date",
 									"value": "null",
 									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Services_Prestamo",
+			"item": [
+				{
+					"name": "ObtenerPrestamosDisponibles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/Service?TypeBorrowing=computer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"Service"
+							],
+							"query": [
+								{
+									"key": "TypeBorrowing",
+									"value": "computer"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nuevo Prestamo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"TypeBorrowing\": \"book\",\r\n    \"registration\": \"66209\",\r\n    \"item_id\": \"5\",\r\n    \"date\": \"2024-05-10 18:54:11.000000\",\r\n    \"return_date\": \"2024-05-10 18:54:11.000000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/Service",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"Service"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Devolver",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/PFI-Services-Api/Service?TypeBorrowing=book&item_id=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"PFI-Services-Api",
+								"Service"
+							],
+							"query": [
+								{
+									"key": "TypeBorrowing",
+									"value": "book"
+								},
+								{
+									"key": "item_id",
+									"value": "5"
 								}
 							]
 						}
