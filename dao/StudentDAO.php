@@ -79,22 +79,22 @@ final class StudentDAO extends ConexionDB
             $query .= " AND m_last_name LIKE '%$m_last_name%'";
         }
         if ($gender !== null) {
-            $query .= " AND gender = '$gender'";
+            $query .= " AND gender LIKE '$gender'";
         }
         if ($birthday_date !== null) {
-            $query .= " AND birthday_date = '$birthday_date'";
+            $query .= " AND birthday_date LIKE '$birthday_date'";
         }
         if ($ethnicity !== null) {
-            $query .= " AND ethnicity = '$ethnicity'";
+            $query .= " AND ethnicity LIKE '$ethnicity'";
         }
         if ($career !== null) {
-            $query .= " AND career = '$career'";
+            $query .= " AND career LIKE '$career'";
         }
         if ($status !== null) {
-            $query .= " AND status = '$status'";
+            $query .= " AND status LIKE '$status'";
         }
         if ($origin_place !== null) {
-            $query .= " AND origin_place = '$origin_place'";
+            $query .= " AND origin_place LIKE '$origin_place'";
         }
         if ($date_of_registration !== null) {
             $query .= " AND date_of_registration <= '$date_of_registration'";
