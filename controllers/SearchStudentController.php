@@ -82,12 +82,13 @@ class SearchStudentController extends responseData
 
         }
         $result = $studentDAO->SearchStudent(
-            $page, $perPage, $registration, $name, $p_last_name, $m_last_name, $gender, $ethnicity, $career, $status
+            $page, $perPage, $registration, $name, $p_last_name, $m_last_name, $gender, $birthday_date = null, $ethnicity, $career, $status
         );
         $resultTotal = $studentDAO->GetTotalStudents();
         $response = array(
             "total" => $resultTotal,
             "data" => $result,
+            "TEST" => $params
         );
         return parent::sendJsonResponse("ok", $response);
     }
