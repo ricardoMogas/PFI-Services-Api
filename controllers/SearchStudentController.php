@@ -37,10 +37,13 @@ class SearchStudentController extends responseData
         $name = null;
         $p_last_name = null;
         $m_last_name = null;
-        $gender = null;
+        $birth_date = null;
         $ethnicity = null;
+        $gender = null;
         $career = null;
         $status = null;
+        $origin_place = null;
+        $date_of_registration = null;
 
         if (!isset($params["page"]) || !isset($params["perPage"])) {
             $result = $studentDAO->GetAll();

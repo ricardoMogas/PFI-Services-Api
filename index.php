@@ -10,14 +10,12 @@ header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Conte
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Allow: GET, POST, OPTIONS, PUT, DELETE");
 $method = $_SERVER['REQUEST_METHOD'];
-if($method == "OPTIONS") {
+if ($method == "OPTIONS") {
     die();
 }
-require_once(__DIR__ . '/core/FrontController.php');
+require_once __DIR__ . '/core/FrontController.php';
 
 // Crear una instancia de la clase FrontController
 $frontController = new FrontController($inFolder = true);
 
 // crear una pagina
-
-?>
