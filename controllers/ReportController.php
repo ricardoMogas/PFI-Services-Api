@@ -10,7 +10,7 @@ class ReportController extends responseData
          * ENTONCES SE EJECUTA EL INDEX COMO METODO PRESETERMINADO
          **/
     }
-    public function doGet(...$params)
+    public function doPost(...$params)
     {
         $type = null; // Licenciatura, Visitas, Genero, etnia
         $typeFrequency = null;
@@ -42,8 +42,12 @@ class ReportController extends responseData
 
             $jsonBody = [
                 [
-                    'Hombres' => $resultH,
-                    'Mujeres' => $resultM
+                    'name' => 'Hombre',
+                    'data' => $resultH
+                ],
+                [
+                    'name' => 'Mujer',
+                    'data' => $resultM
                 ]
             ];
 

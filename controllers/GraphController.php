@@ -11,7 +11,7 @@ class GraphController extends responseData
          **/
     }
 
-    public function doGet(...$params)
+    public function doPost(...$params)
     {
         // DECLARAR VARIABLES
         $type = null; // Licenciatura, Visitas, Genero, etnia
@@ -99,9 +99,5 @@ class GraphController extends responseData
         } else if ($type === "Visitas") {
             return parent::sendJsonResponse("ok", "En proceso de desarrollo");
         }
-    }
-
-    public function doPost(...$params)
-    {
     }
 }
