@@ -1,10 +1,6 @@
 <?php
 // Habilitar CORS
 header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: *");
-header("Access-Control-Allow-Headers: Content-Type");
-
 class responseData {
 
     private $response = [
@@ -27,11 +23,11 @@ class responseData {
         return $this->response;
     }
 
-    public function error_400() {
+    public function error_400($value = "Predeterminado") {
         $this->response['status'] = 'error';
         $this->response['result'] = array(
             'error_id' => '400',
-            'error_msg' => 'Nombre de datos incorrecto o formato incorrecto'
+            'error_msg' => 'Nombre de datos incorrecto o formato incorrecto: ' . $value
         );
         return $this->response;
     }
