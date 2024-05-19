@@ -91,7 +91,7 @@ class SearchStudentController extends responseData
         $response = array(
             "total" => $resultTotal,
             "data" => $result,
-            "TEST" => $params
+                "TEST" => $params
         );
         return parent::sendJsonResponse("ok", $response);
     }

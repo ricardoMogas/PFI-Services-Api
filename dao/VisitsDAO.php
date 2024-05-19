@@ -70,7 +70,7 @@ final class VisitsDAO extends ConexionDB
         if ($date === null) {
             $date = date("Y-m-d");
         }
-        $query = "SELECT * FROM registered_visits WHERE exit_time IS NULL AND visit_date = '$date'";
+        $query = "SELECT * FROM registered_visits WHERE visit_date = '$date'";
         $result = $this->getData($query);
         if ($result === []) {
             // echo "No existen registros de visitas sin salida el día $date";

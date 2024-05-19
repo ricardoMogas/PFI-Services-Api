@@ -60,9 +60,14 @@ class NonRegVisitsController extends responseData
             $NonRegVisitsDAO = new VisitsNonRegisteredDAO();
             $result = $NonRegVisitsDAO->RegisterNewVisit($params["matricula"], $params["date"]);
             return parent::sendJsonResponse("ok", $result);
+        }
+        if ( isset($params["deleteVisit"]) ){
+            $NonRegVisitsDAO = new VisitsNonRegisteredDAO();
+            $result = $NonRegVisitsDAO->DeleteVisit($params["deleteVisit"]);
+            return parent::sendJsonResponse("ok", $result);
         } else {
             return parent::error_400();
-        }        
+        }
     }
 
     public function doPut(...$params)

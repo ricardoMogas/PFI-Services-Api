@@ -1,7 +1,7 @@
 <?php
 class TypeBorrowing {
-    public int $id_type;
-    public string $name;
+    public $id_type;
+    public $name;
 
     public function __construct($id_type = null, $name = null)
     {

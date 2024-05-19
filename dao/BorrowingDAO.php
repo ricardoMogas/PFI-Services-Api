@@ -169,6 +169,20 @@ class BorrowingDAO extends ConexionDB {
         $params = [$id];
         return $this->deleteData($query, $params);
     }
+
+    public function GetTypeBorrowing(){
+        $query = "SELECT * FROM type_borrowing";
+        $result = $this->getData($query);
+        $typeBorrowings = array();
+        foreach ($result as $row) {
+            $typeBorrowing = new TypeBorrowing();
+            foreach ($row as $key => $value) {
+                $typeBorrowing->$key = $value;
+            }
+            $typeBorrowings[] = $typeBorrowing;
+        }
+        return $typeBorrowings;
+    }
 }
 // USE EXAMPLE DeleteBorrowing()
 /*

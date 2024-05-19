@@ -57,7 +57,7 @@ class ServiceController extends responseData
                 }
                 return parent::sendJsonResponse("ok", $result);
                 break;
-            case "Book":
+            case "book":
                 $result = $bookDAO->GetAll();
                 if ($result == false) {
                     return parent::sendJsonResponse("error", "Locker not found");

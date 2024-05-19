@@ -74,7 +74,7 @@ final class VisitsNonRegisteredDAO extends ConexionDB
         if ($date === null) {
             $date = date("Y-m-d");
         }
-        $query = "SELECT * FROM unregistered_visits WHERE exit_time IS NULL AND visit_date = '$date'";
+        $query = "SELECT * FROM unregistered_visits WHERE visit_date = '$date'";
         $result = $this->getData($query);
         if ($result === []) {
             // echo "No existen registros de visitas el día $date";
@@ -86,6 +86,7 @@ final class VisitsNonRegisteredDAO extends ConexionDB
             foreach ($row as $key => $value) {
                 $registeredVisit->$key = $value;
             }
+            $registeredVisit->total_visits = $this->TotalVisits($registeredVisit->registration);
             $registeredVisits[] = $registeredVisit;
         }
         return $registeredVisits;
@@ -185,6 +186,19 @@ final class VisitsNonRegisteredDAO extends ConexionDB
             return true;
         }
         
+    }
+
+    public function TotalVisits($registration = null, $date = null)
+    {
+        if ($date === null) {
+            $date = date("Y-m-d");
+        }
+        if ($registration != null) {
+            $result = $this->getData("SELECT COUNT(*) FROM unregistered_visits WHERE registration = $registration");
+            return $result[0]['COUNT(*)'];
+        }
+        $result = $this->getData("SELECT COUNT(*) FROM unregistered_visits WHERE visit_date = $date");
+        return $result[0]['COUNT(*)'];
     }
 }
 
