@@ -11,6 +11,20 @@ final class StudentDAO extends ConexionDB
         parent::__construct();
     }
 
+    public function GetOne($registration)
+    {
+        $query = "SELECT * FROM students WHERE registration = $registration";
+        $result = $this->getData($query);
+        if (count($result) == 0) {
+            return false;
+        }
+        $student = new Student();
+        foreach ($result[0] as $key => $value) {
+            $student->$key = $value;
+        }
+        return $student;
+    }
+
     public function GetAll()
     {
         $query = "SELECT * FROM students";

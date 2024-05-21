@@ -83,16 +83,18 @@ class ServiceController extends responseData
         $lockerDAO = new LockerDAO();
         $borrowing = new Borrowing();
         $borrowingDAO = new BorrowingDAO();
+        $studentDAO = new StudentDAO();
         if (
             !isset($params["TypeBorrowing"]) && isset($params["item_id"]) && !isset($params["registration"])
             && !isset($params["return_date"]) && !isset($params["date"])
         ) {
             return parent::sendJsonResponse("error", "TypeBorrowing and registration is required");
         }
-
-        if (!$this->validate_date($params["date"]) || !$this->validate_date($params["return_date"])) {
-            return parent::sendJsonResponse("error", "Invalid date format");
+        $resultExistStudent = $studentDAO->GetOne($params["registration"]);
+        if ($resultExistStudent == false) {
+            return parent::sendJsonResponse("error", "no existe el estudiante");
         }
+        
         switch ($params["TypeBorrowing"]) {
             case "locker":
                 // Verificar si el locker esta prestado y si la fecha de retorno no expiro

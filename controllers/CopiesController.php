@@ -58,7 +58,7 @@ class CopiesController extends responseData{
             return $this->sendJsonResponse("ok", "Ya completaste las copias totales del mes : " . date("Y-m"));
         }
         if (($total + $resultTotal) > 50) {
-            return $this->sendJsonResponse("ok","Se excendio el limite de copias, solo puedes hacer 50 copias al mes");
+            return $this->sendJsonResponse("ok","Se excendio el limite de copias, solo puedes hacer 50 copias al mes:".$total."-".$resultTotal);
         }
 
 

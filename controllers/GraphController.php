@@ -54,7 +54,7 @@ class GraphController extends responseData
 
 
         } else if ($type === "Etnia") {
-            $etniasList = ["Otro", "Maya", "Mixteca", "Maya", "Afroamericano"];
+            $etniasList = ["Otro", "Maya", "Mixteca", "Afroamericano", "Nahuatl", "Chiapaneco", "Purepecha", "Otomi", "Azteca", "Zapoteca", "Olmeca"];
             $jsonBody = [];
             foreach ($etniasList as $etnia) {
                 $query = "SELECT 

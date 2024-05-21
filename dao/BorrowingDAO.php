@@ -63,16 +63,14 @@ class BorrowingDAO extends ConexionDB {
         $queryName = "SELECT name FROM students WHERE registration = '$borrowing->registration'";
         $resultName = $this->getData($queryName);
         if ($resultName === []) {
-            // return "El estudiante con matricula $borrowing->registration no existe";
-            return false;
+            return "El estudiante con matricula $borrowing->registration no existe";
         }
 
         // Existe el tipo de prestamo
         $queryTypeBorrowing = "SELECT * FROM type_borrowing WHERE name = '$borrowing->type_borrowing'";
         $resultTypeBorrowing = $this->getData($queryTypeBorrowing);
         if ($resultTypeBorrowing === []) {
-            // return "El tipo de prestamo con id $borrowing->type_borrowing no existe";
-            return false;
+            return "El tipo de prestamo con id $borrowing->type_borrowing no existe";
         }
         
         // insertar prestamo nuevo
