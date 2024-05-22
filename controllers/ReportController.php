@@ -90,9 +90,10 @@ class ReportController extends responseData
                 $query = "SELECT
                     *
                     FROM students
-                    WHERE career = '$licenciatura'
-                    AND date_of_registration BETWEEN '$startDate' AND '$endDate'";
-
+                    WHERE career = '$licenciatura'";
+                if ($startDate !== null && $endDate !== null) {
+                    $query .= "AND date_of_registration BETWEEN '$startDate' AND '$endDate'";
+                }
                 $result = $consulta->getData($query);
 
                 $jsonBody[] = [

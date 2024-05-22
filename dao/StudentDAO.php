@@ -131,7 +131,7 @@ final class StudentDAO extends ConexionDB
         $result = $this->getData($query);
 
         if (count($result) > 0) {
-            return false;
+            return "Ya Existe el estudiante";
         }
 
         foreach ($requiredFields as $field) {
