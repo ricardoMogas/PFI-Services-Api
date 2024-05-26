@@ -68,7 +68,7 @@ CREATE TABLE `borrowing` (
 
 --
 -- Estructura de tabla para la tabla `computer`
---
+--  
 
 CREATE TABLE `computer` (
   `id` int(11) NOT NULL,
