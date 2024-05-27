@@ -103,7 +103,7 @@ final class VisitsNonRegisteredDAO extends ConexionDB
         }
         // si hay mas de 5 registros de visitas de una matricula en total no se puede registrar otra visita
         $count = $this->getData("SELECT COUNT(*) FROM unregistered_visits WHERE registration = $registration");
-        if ($count[0]['COUNT(*)'] >= 5) {
+        if ($count[0]['COUNT(*)'] >= TOTAL_VISITAS) {
             // echo "No se puede registrar otra visita, ya hay 5 registros de visitas de $registration";
             $result = [
                 "register" => false,
