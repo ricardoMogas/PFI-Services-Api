@@ -131,7 +131,7 @@ final class StudentDAO extends ConexionDB
         $result = $this->getData($query);
 
         if (count($result) > 0) {
-            return "Ya Existe el estudiante";
+            return "Ya existe un estudiante con esa matrícula";
         }
 
         foreach ($requiredFields as $field) {
@@ -146,7 +146,7 @@ final class StudentDAO extends ConexionDB
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $params = [
                 $student->registration,
-                $student->name,
+                strtoupper($student->name),
                 $student->p_last_name,
                 $student->m_last_name,
                 $student->gender,
