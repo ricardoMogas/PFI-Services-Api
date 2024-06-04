@@ -104,6 +104,7 @@ class StudentsController extends responseData
             "career" : "ISC",
             "status" : "Activo",
             "origin_place" : "Campeche"
+            'date_of_registration' : "2021-10-28"
         }
 
      */
@@ -112,8 +113,8 @@ class StudentsController extends responseData
 
         if (!isset($params["registration"]) || !isset($params["name"]) || !isset($params["gender"]) ||
             !isset($params["birthday_date"]) || !isset($params["ethnicity"]) || !isset($params["career"]) ||
-            !isset($params["status"]) || !isset($params["origin_place"])) {
-            return parent::error_400("Faltan datos obligatorios");
+            !isset($params["status"]) || !isset($params["origin_place"]) || !isset($params["date_of_registration"])) {
+            return parent::error_400($params["date_of_registration"]);
         }
 
         $studentDAO = new StudentDAO();
@@ -128,7 +129,7 @@ class StudentsController extends responseData
         $student->career = $params["career"];
         $student->status = $params["status"];
         $student->origin_place = $params["origin_place"];
-        $student->date_of_registration = date("Y-m-d");
+        $student->date_of_registration = empty($params["date_of_registration"]) ? date("Y-m-d") : $params["date_of_registration"];
 
         $result = $studentDAO->InsertStudent($student);
         return parent::sendJsonResponse("ok", $result);
