@@ -80,8 +80,8 @@ class ReportController extends responseData
 
             return parent::sendJsonResponse("ok", $jsonBody);
         } else if ($type === "Licenciatura") {
-            $startDate = isset($params["startDate"]) ? $params["startDate"] : date('Y-m-d', strtotime("-3 months"));
-            $endDate = isset($params["endDate"]) ? $params["endDate"] : date('Y-m-d');
+            $startDate = isset($params["startDate"]) ? $params["startDate"] : null;
+            $endDate = isset($params["endDate"]) ? $params["endDate"] : null;
 
             $LicenciaturasList = ["ISC", "IM", "ICA", "IE", "IME", "ITS"];
             $jsonBody = [];
