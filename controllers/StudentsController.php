@@ -123,7 +123,7 @@ class StudentsController extends responseData
         $student->name = $params["name"];
         $student->p_last_name = "N/A";
         $student->m_last_name = "N/A";
-        $student->gender = $params["gender"];
+        $student->gender = rtrim($params["gender"], ".");
         $student->birthday_date = $params["birthday_date"];
         $student->ethnicity = $params["ethnicity"];
         $student->career = $params["career"];

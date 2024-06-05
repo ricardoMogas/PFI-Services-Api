@@ -16,8 +16,8 @@ define('TOTAL_VISITAS', 5);
 
 
 
-define('NAME_MALE', 'Hombre');
-define('NAME_FEMALE', 'Mujer');
+define('NAME_MALE', 'Masculino');
+define('NAME_FEMALE', 'Femenino');
 define('computer', 1);
 define('book', 2);
 define('locker', 3);

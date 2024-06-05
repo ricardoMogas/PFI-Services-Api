@@ -27,7 +27,6 @@ class SessionController extends responseData
             } else {
                 return parent::sendJsonResponse("error", "No se ha encontrado el usuario");
             }
-            return parent::sendJsonResponse("ok", );
         } else {
             return parent::sendJsonResponse("error", "No se ha especificado el usuario o la contraseña");
         }
