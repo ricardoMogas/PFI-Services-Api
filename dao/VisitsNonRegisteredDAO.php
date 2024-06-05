@@ -143,7 +143,7 @@ final class VisitsNonRegisteredDAO extends ConexionDB
         $resultNotNull = $this->getData(
             "SELECT * FROM unregistered_visits WHERE registration = $registration AND exit_time IS NOT NULL AND visit_date = '$date'"
         );
-        if ($results === [] || $resultNotNull !== []) {
+        if ($results === [] ) {
             // echo " --- No existe registro de visita de $registration el día $date ---";
             return false;
         } else {
