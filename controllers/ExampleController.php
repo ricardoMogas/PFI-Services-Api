@@ -56,8 +56,8 @@ class ExampleController extends responseData{
     }
 
     public function doPost(...$params) {
-        $body = $params["data"];
-        return $body["name"];
+        $body = $params["message"];
+        return $body[0];
         /* 
         ENTPOINT
         http://localhost/PFI-Services-Api/Example

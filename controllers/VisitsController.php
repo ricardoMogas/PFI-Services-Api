@@ -63,8 +63,14 @@ class VisitsController extends responseData
             $visitsDAO = new VisitsDAO();
             $result = $visitsDAO->RegisterNewVisit($params["matricula"], $params["date"]);
             return parent::sendJsonResponse("ok", $result);
+        }
+        if ( isset($params["deleteVisit"]) ){
+            // Cuando se envia el parametro deleteVisit
+            $visitsDAO = new VisitsDAO();
+            $result = $visitsDAO->DeleteVisit($params["deleteVisit"]);
+            return parent::sendJsonResponse("ok", $result);
         } else {
-            // cuando no se envia ninguno error
+            // Cualquier otro caso
             return parent::error_400();
         }
 

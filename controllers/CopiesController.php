@@ -53,12 +53,12 @@ class CopiesController extends responseData{
         $registration = $params["registration"];
         $total = $params["total"];
 
-        $resultTotal = $copiesDAO->GetTotalCopiesStudent($params["registration"], null);
+        $resultTotal = $copiesDAO->GetTotalCopiesStudent($registration, $date);
         if ($resultTotal >= TOTAL_COPIES) {
             return $this->sendJsonResponse("ok", "Ya completaste las copias totales del mes : " . date("Y-m"));
         }
         if (($total + $resultTotal) > 50) {
-            return $this->sendJsonResponse("ok","Se excendio el limite de copias, solo puedes hacer 50 copias al mes");
+            return $this->sendJsonResponse("ok","Se excendio el limite de copias, solo puedes hacer 50 copias al mes:".$total."-".$resultTotal);
         }
 
 

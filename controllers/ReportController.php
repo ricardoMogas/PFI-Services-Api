@@ -1,16 +1,16 @@
 <?php
-require_once(__DIR__ . "/../core/responseData.class.php");
-require_once(__DIR__ . "/../core/conexionDB.php");
+require_once __DIR__ . "/../core/responseData.class.php";
+require_once __DIR__ . "/../core/conexionDB.php";
 class ReportController extends responseData
 {
     public function index(...$params)
     {
-        /** 
+        /**
          * SI NO EXISTE EL doGet, doPost, doDelete y doPut
          * ENTONCES SE EJECUTA EL INDEX COMO METODO PRESETERMINADO
          **/
     }
-    public function doGet(...$params)
+    public function doPost(...$params)
     {
         $type = null; // Licenciatura, Visitas, Genero, etnia
         $typeFrequency = null;
@@ -27,45 +27,54 @@ class ReportController extends responseData
 
         // OPTENER LOS DATOS DE LA BASE DE DATOS DIRECTAMENTE
         if ($type === "Genero") {
-            $startDate = isset($params["startDate"]) ? $params["startDate"] : date('Y-m-d', strtotime("-3 months"));
-            $endDate = isset($params["endDate"]) ? $params["endDate"] : date('Y-m-d');
+            $startDate = $params["startDate"];
+            $endDate = $params["endDate"];
             $NAME_MALE = NAME_MALE;
             $NAME_FEMALE = NAME_FEMALE;
             $queryH = "SELECT *
                         FROM students
-                        WHERE gender = '$NAME_MALE' AND date_of_registration BETWEEN '$startDate' AND '$endDate'";
+                        WHERE gender = '$NAME_MALE'";
+
             $queryM = "SELECT *
                         FROM students
-                        WHERE gender = '$NAME_FEMALE' AND date_of_registration BETWEEN '$startDate' AND '$endDate'";
+                        WHERE gender = '$NAME_FEMALE'";
+            if ($startDate !== null && $endDate !== null) {
+                $queryH .= " AND date_of_registration BETWEEN '$startDate' AND '$endDate'";
+                $queryM .= " AND date_of_registration BETWEEN '$startDate' AND '$endDate'";
+            }
             $resultH = $consulta->getData($queryH);
             $resultM = $consulta->getData($queryM);
 
             $jsonBody = [
                 [
-                    'Hombres' => $resultH,
-                    'Mujeres' => $resultM
-                ]
+                    'name' => 'Hombre',
+                    'data' => $resultH,
+                ],
+                [
+                    'name' => 'Mujer',
+                    'data' => $resultM,
+                ],
             ];
 
             return parent::sendJsonResponse("ok", $jsonBody);
         } else if ($type === "Etnia") {
-            $startDate = isset($params["startDate"]) ? $params["startDate"] : date('Y-m-d', strtotime("-3 months"));
-            $endDate = isset($params["endDate"]) ? $params["endDate"] : date('Y-m-d');
+            $startDate = $params["startDate"];
+            $endDate = $params["endDate"];
 
-            $etniasList = ["Otro", "Maya", "Mixteca", "Afroamericano"];
+            $etniasList = ["Otro", "Maya", "Mixteca", "Afroamericano", "Nahuatl", "Chiapaneco", "Purepecha", "Otomi", "Azteca", "Zapoteca", "Olmeca"];
             $jsonBody = [];
 
             foreach ($etniasList as $etnia) {
                 $query = "SELECT *
-                            FROM students 
-                            WHERE ethnicity = '$etnia'
-                            AND date_of_registration BETWEEN '$startDate' AND '$endDate'";
-
+                            FROM students
+                            WHERE ethnicity = '$etnia'";
+                if ($startDate !== null && $endDate !== null) {
+                    $query .= "AND date_of_registration BETWEEN '$startDate' AND '$endDate'";
+                }
                 $result = $consulta->getData($query);
-
                 $jsonBody[] = [
                     'name' => $etnia,
-                    'data' => $result
+                    'data' => $result,
                 ];
             }
 
@@ -78,17 +87,18 @@ class ReportController extends responseData
             $jsonBody = [];
 
             foreach ($LicenciaturasList as $licenciatura) {
-                $query = "SELECT 
+                $query = "SELECT
                     *
-                    FROM students 
-                    WHERE career = '$licenciatura'
-                    AND date_of_registration BETWEEN '$startDate' AND '$endDate'";
-
+                    FROM students
+                    WHERE career = '$licenciatura'";
+                if ($startDate !== null && $endDate !== null) {
+                    $query .= "AND date_of_registration BETWEEN '$startDate' AND '$endDate'";
+                }
                 $result = $consulta->getData($query);
 
                 $jsonBody[] = [
                     'name' => $licenciatura,
-                    'data' => $result
+                    'data' => $result,
                 ];
             }
 
@@ -97,7 +107,7 @@ class ReportController extends responseData
             $startDate = isset($params["startDate"]) ? $params["startDate"] : date('Y-m-d', strtotime("-3 months"));
             $endDate = isset($params["endDate"]) ? $params["endDate"] : date('Y-m-d');
             $query = "SELECT *
-                        FROM registered_visits 
+                        FROM registered_visits
                         WHERE visit_date BETWEEN '$startDate' AND '$endDate'";
             $result = $consulta->getData($query);
             return parent::sendJsonResponse("ok", $result);

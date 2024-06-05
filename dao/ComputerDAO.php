@@ -28,14 +28,18 @@ class ComputerDAO extends ConexionDB
     {
         $query = "SELECT * FROM computer WHERE id = '$id'";
         $result = $this->getData($query);
-        $computer = new Computer();
-        $computer->id = $result[0]['id'];
-        $computer->no_series = $result[0]['no_series'];
-        $computer->id_borrowing = $result[0]['id_borrowing'];
-        $computer->status = $result[0]['status'];
-        $computer->model = $result[0]['model'];
-        $computer->type = $result[0]['type'];
-        $computer->description = $result[0]['description'];
+        if (!empty($result)) {
+            $computer = new Computer();
+            $computer->id = $result[0]['id'];
+            $computer->no_series = $result[0]['no_series'];
+            $computer->id_borrowing = $result[0]['id_borrowing'];
+            $computer->status = $result[0]['status'];
+            $computer->model = $result[0]['model'];
+            $computer->type = $result[0]['type'];
+            $computer->description = $result[0]['description'];
+        } else {
+            $computer = null;
+        }
         return $computer;
     }
 
@@ -79,6 +83,12 @@ class ComputerDAO extends ConexionDB
         $result = $this->getData($queryComputer);
         if (count($result) == 0){
             return false;
+        }
+        // si es null el $id_borrowing se actualiza a null
+        if ($id_borrowing == null){
+            $query = "UPDATE computer SET id_borrowing = ? WHERE id = ?";
+            $params = [null, $id];
+            return $this->updateData($query, $params);
         }
 
         $query = "UPDATE computer SET id_borrowing = ? WHERE id = ?";

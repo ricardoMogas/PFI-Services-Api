@@ -41,9 +41,13 @@ class BorrowingDAO extends ConexionDB {
 
     public function GetOne($id)
     {
+        $borrowing = new Borrowing();
         $query = "SELECT * FROM borrowing WHERE id_borrowing = '$id'";
         $result = $this->getData($query);
-        $borrowing = new Borrowing();
+        if (count($result) == 0){
+            // return "No existe el prestamo";
+            return new Borrowing();
+        }
         $borrowing->id_borrowing = $result[0]['id_borrowing'];
         $borrowing->registration = $result[0]['registration'];
         $borrowing->type_borrowing = $result[0]['type_borrowing'];
@@ -52,27 +56,26 @@ class BorrowingDAO extends ConexionDB {
         return $borrowing;
     }
 
-    public function InsertBorrowing($borrowing, $id_item)
+    public function InsertBorrowing($borrowing, $id_item = null)
     {
+
         //existe el estudiante
-        $queryRegistration = "SELECT registration FROM students WHERE registration = '$borrowing->registration'";
-        $resultRegistration = $this->getData($queryRegistration);
-        if ($resultRegistration === []) {
-            // return "El estudiante con matricula $borrowing->registration no existe";
-            return false;
+        $queryName = "SELECT name FROM students WHERE registration = '$borrowing->registration'";
+        $resultName = $this->getData($queryName);
+        if ($resultName === []) {
+            return "El estudiante con matricula $borrowing->registration no existe";
         }
 
         // Existe el tipo de prestamo
-        $queryTypeBorrowing = "SELECT * FROM type_borrowing WHERE id_type = '$borrowing->type_borrowing'";
+        $queryTypeBorrowing = "SELECT * FROM type_borrowing WHERE name = '$borrowing->type_borrowing'";
         $resultTypeBorrowing = $this->getData($queryTypeBorrowing);
         if ($resultTypeBorrowing === []) {
-            // return "El tipo de prestamo con id $borrowing->type_borrowing no existe";
-            return false;
+            return "El tipo de prestamo con id $borrowing->type_borrowing no existe";
         }
-
+        
         // insertar prestamo nuevo
         $query = "INSERT INTO borrowing (registration, type_borrowing, borrowing_date, return_date) VALUES (?, ?, ?, ?)";
-        $params = [$borrowing->registration, $borrowing->type_borrowing, $borrowing->borrowing_date, $borrowing->return_date];
+        $params = [$borrowing->registration, $resultTypeBorrowing[0]["id_type"], $borrowing->borrowing_date, $borrowing->return_date];
         $borrowingId = $this->insertDataId($query, $params);
         return $borrowingId;
         // Actualizar tabla respectiva de los diferentes servicios
@@ -128,8 +131,27 @@ class BorrowingDAO extends ConexionDB {
             // return "No existe el prestamo";
             return false;
         }
-        $query = "UPDATE borrowing SET registration = ?, type_borrowing = ?, borrowing_date = ?, return_date = ? WHERE id_borrowing = ?";
-        $params = [$registration, $type_borrowing, $borrowing_date, $return_date, $id];
+        $query = "UPDATE borrowing SET";
+        $params = [];
+        if ($registration !== null) {
+            $query .= " registration = ?,";
+            $params[] = $registration;
+        }
+        if ($type_borrowing !== null) {
+            $query .= " type_borrowing = ?,";
+            $params[] = $type_borrowing;
+        }
+        if ($borrowing_date !== null) {
+            $query .= " borrowing_date = ?,";
+            $params[] = $borrowing_date;
+        }
+        if ($return_date !== null) {
+            $query .= " return_date = ?,";
+            $params[] = $return_date;
+        }
+        $query = rtrim($query, ",");
+        $query .= " WHERE id_borrowing = ?";
+        $params[] = $id;
         return $this->updateData($query, $params);
     }
 
@@ -144,6 +166,20 @@ class BorrowingDAO extends ConexionDB {
         $query = "DELETE FROM borrowing WHERE id_borrowing = ?";
         $params = [$id];
         return $this->deleteData($query, $params);
+    }
+
+    public function GetTypeBorrowing(){
+        $query = "SELECT * FROM type_borrowing";
+        $result = $this->getData($query);
+        $typeBorrowings = array();
+        foreach ($result as $row) {
+            $typeBorrowing = new TypeBorrowing();
+            foreach ($row as $key => $value) {
+                $typeBorrowing->$key = $value;
+            }
+            $typeBorrowings[] = $typeBorrowing;
+        }
+        return $typeBorrowings;
     }
 }
 // USE EXAMPLE DeleteBorrowing()

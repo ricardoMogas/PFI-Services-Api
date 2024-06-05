@@ -117,7 +117,8 @@ final class CopiesDAO extends ConexionDB
         $resultDateMonth = $this->getData($dateMonth);
         
         if ( count($resultDateMonth) == 0 ) {
-            return "No tiene copias o impresiones hechas en este mes";
+            // return "No tiene copias o impresiones hechas en este mes";
+            return 0;
         } else {
             $total = 0;
             foreach ($resultDateMonth as $row) {

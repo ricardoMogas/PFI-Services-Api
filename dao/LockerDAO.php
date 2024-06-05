@@ -79,8 +79,14 @@ class LockerDAO extends ConexionDB
             //return "No existe el locker";
             return false;
         }
+        // si es null el $id_borrowing se actualiza a null
+        if ($id_borrowing == null ){
+            $query = "UPDATE locker SET id_borrowing = ?, status = 'Libre' WHERE id_locker = ?";
+            $params = [null, $id_locker];
+            return $this->updateData($query, $params);
+        }
 
-        $query = "UPDATE locker SET id_borrowing = ? WHERE id_locker = ?";
+        $query = "UPDATE locker SET id_borrowing = ?, status = 'Ocupado' WHERE id_locker = ?";
         $params = [$id_borrowing, $id_locker];
         return $this->updateData($query, $params);
     }

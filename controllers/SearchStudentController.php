@@ -37,10 +37,13 @@ class SearchStudentController extends responseData
         $name = null;
         $p_last_name = null;
         $m_last_name = null;
-        $gender = null;
+        $birth_date = null;
         $ethnicity = null;
+        $gender = null;
         $career = null;
         $status = null;
+        $origin_place = null;
+        $date_of_registration = null;
 
         if (!isset($params["page"]) || !isset($params["perPage"])) {
             $result = $studentDAO->GetAll();
@@ -82,12 +85,13 @@ class SearchStudentController extends responseData
 
         }
         $result = $studentDAO->SearchStudent(
-            $page, $perPage, $registration, $name, $p_last_name, $m_last_name, $gender, $ethnicity, $career, $status
+            $page, $perPage, $registration, $name, $p_last_name, $m_last_name, $gender, $birthday_date = null, $ethnicity, $career, $status
         );
         $resultTotal = $studentDAO->GetTotalStudents();
         $response = array(
             "total" => $resultTotal,
             "data" => $result,
+                "TEST" => $params
         );
         return parent::sendJsonResponse("ok", $response);
     }

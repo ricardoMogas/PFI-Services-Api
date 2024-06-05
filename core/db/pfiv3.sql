@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-05-2024 a las 05:04:37
+-- Tiempo de generación: 27-05-2024 a las 04:01:33
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -277,7 +277,37 @@ INSERT INTO `unregistered_visits` (`no_Visit`, `registration`, `entry_time`, `ex
 (12, 66209, '22:41:02.000000', '22:55:09.000000', '2024-04-17'),
 (13, 66205, '16:46:12.000000', NULL, '2024-05-08'),
 (14, 66205, '16:34:02.000000', '16:35:37.000000', '2024-05-09'),
-(15, 66205, '16:34:08.000000', '16:35:37.000000', '2024-05-09');
+(15, 66205, '16:34:08.000000', '16:35:37.000000', '2024-05-09'),
+(16, 123, '11:18:50.000000', NULL, '2024-05-25'),
+(17, 123, '11:20:10.000000', NULL, '2024-05-25'),
+(18, 123, '11:20:13.000000', NULL, '2024-05-25'),
+(19, 123, '11:20:32.000000', NULL, '2024-05-25'),
+(20, 123, '11:20:34.000000', NULL, '2024-05-25'),
+(21, 1234, '11:22:33.000000', NULL, '2024-05-25'),
+(22, 1234, '11:22:52.000000', NULL, '2024-05-25'),
+(23, 1234, '11:23:05.000000', NULL, '2024-05-25'),
+(24, 1234, '11:23:43.000000', NULL, '2024-05-25');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `name` varchar(256) NOT NULL,
+  `email` varchar(256) NOT NULL,
+  `password` varchar(256) NOT NULL,
+  `rol` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `rol`) VALUES
+(1, 'root', 'simple@example.com', 'root', 0);
 
 --
 -- Índices para tablas volcadas
@@ -345,6 +375,12 @@ ALTER TABLE `unregistered_visits`
   ADD PRIMARY KEY (`no_Visit`);
 
 --
+-- Indices de la tabla `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -394,7 +430,13 @@ ALTER TABLE `type_borrowing`
 -- AUTO_INCREMENT de la tabla `unregistered_visits`
 --
 ALTER TABLE `unregistered_visits`
-  MODIFY `no_Visit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `no_Visit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT de la tabla `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas

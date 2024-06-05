@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Obtener el cuerpo de la solicitud como JSON
     $requestBody = file_get_contents('php://input');
     $requestData = json_decode($requestBody, true);
-    $datosArray = $_auth->login($requestData);
     print_r(json_encode($datosArray));
 } else {
     echo "metodo no permitido";
