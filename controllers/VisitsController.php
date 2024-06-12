@@ -24,7 +24,7 @@ class VisitsController extends responseData
                 $visitsDAO = new VisitsDAO();
                 $result = $visitsDAO->GetAllVisistsNotExitToday();
                 return parent::sendJsonResponse("ok", $result);
-            } elseif( isset($params["todayNotExit"]) && preg_match('/^\d{2}-\d{2}-\d{2}$/', $params["todayNotExit"]) ) {
+            } elseif( isset($params["todayNotExit"]) ) {
                 // Si el valor de todayNotExit es una fecha válida en el formato "y-m-d"
                 $visitsDAO = new VisitsDAO();
                 $result = $visitsDAO->GetAllVisistsNotExitToday($params["todayNotExit"]);

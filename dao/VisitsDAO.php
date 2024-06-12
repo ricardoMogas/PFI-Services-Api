@@ -85,7 +85,7 @@ final class VisitsDAO extends ConexionDB
         $result = $this->getData($query);
         if ($result === []) {
             // echo "No existen registros de visitas sin salida el día $date";
-            return false;
+            return [];
         }
         $registeredVisits = [];
         foreach ($result as $row) {

@@ -3,6 +3,7 @@ require_once __DIR__ . "/../core/responseData.class.php";
 require_once __DIR__ . "/../models/Student.php";
 require_once __DIR__ . "/../dao/StudentDAO.php";
 
+
 class SearchStudentController extends responseData
 {
     public function index(...$params)

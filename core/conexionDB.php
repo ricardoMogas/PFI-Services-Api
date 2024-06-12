@@ -1,5 +1,5 @@
 <?php
-include(dirname(__FILE__) . '/../config.php');
+include dirname(__FILE__) . '/../config.php';
 
 class ConexionDB
 {
@@ -9,7 +9,7 @@ class ConexionDB
     private $db;
     private $conexion;
 
-    //constructor 
+    //constructor
     public function __construct()
     {
         $this->host = DB_HOST;
@@ -54,7 +54,7 @@ class ConexionDB
         try {
             $stmt = $this->conexion->prepare($sqlstr); //evitar inyecciones de codigo
             if ($stmt === false) {
-                throw new Exception("Error al preparar la consulta: " . $this->conexion->error);
+                return "Error al preparar la consulta: " . $this->conexion->error;
             }
 
             $stmt->execute();
@@ -63,7 +63,34 @@ class ConexionDB
 
             return $this->convertUTF8($resultArray);
         } catch (Exception $e) {
-            throw new Exception("Error al obtener datos: " . $e->getMessage());
+            return "Error al obtener datos: " . $e->getMessage();
+        }
+    }
+
+    public function getDataEs($sqlstr)
+    {
+        try {
+            $stmt = $this->conexion->prepare($sqlstr); //evitar inyecciones de codigo
+            if ($stmt === false) {
+                return [
+                    "status" => false,
+                    "data" => "Error al preparar la consulta: " . $this->conexion->error,
+                ];
+            }
+
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $resultArray = [
+                "status" => true,
+                "data" => $result->fetch_all(MYSQLI_ASSOC),
+            ];
+
+            return $this->convertUTF8($resultArray);
+        } catch (Exception $e) {
+            return [
+                "status" => false,
+                "data" => "Error al obtener datos: " . $e->getMessage(),
+            ];
         }
     }
 
@@ -110,7 +137,7 @@ class ConexionDB
                 $stmt->bind_param(str_repeat('s', count($params)), ...$params);
 
                 $stmt->execute();
-                $insertId = $stmt->insert_id;  // Obtener el ID de la fila insertada
+                $insertId = $stmt->insert_id; // Obtener el ID de la fila insertada
                 $stmt->close();
                 return $insertId;
             } else {
@@ -183,19 +210,19 @@ class ConexionDB
 /*
 // Ejemplo de uso de insertData CON PARAMETROS
 $conexionDB = new ConexionDB();
-$sql = "INSERT INTO registered_visits (no_Visit, registration, entry_time, exit_time, visit_date) 
-        VALUES (?, ?, ?, ?, ?)";
+$sql = "INSERT INTO registered_visits (no_Visit, registration, entry_time, exit_time, visit_date)
+VALUES (?, ?, ?, ?, ?)";
 $params = [
-    $no_visitValue = null, // reemplaza esto con el valor real
-    $registrationValue = 68322, // reemplaza esto con el valor real
-    $entry_time = date("H:i:s"), // reemplaza esto con el valor real
-    $exit_time = null, // reemplaza esto con el valor real
-    $visit_date = date("Y-m-d"), // reemplaza esto con el valor real
+$no_visitValue = null, // reemplaza esto con el valor real
+$registrationValue = 68322, // reemplaza esto con el valor real
+$entry_time = date("H:i:s"), // reemplaza esto con el valor real
+$exit_time = null, // reemplaza esto con el valor real
+$visit_date = date("Y-m-d"), // reemplaza esto con el valor real
 ];
 
 try {
-    $conexionDB->insertData($sql, $params);
+$conexionDB->insertData($sql, $params);
 } catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
+echo "Error: " . $e->getMessage();
 }
-*/
+ */

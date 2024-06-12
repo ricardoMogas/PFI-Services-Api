@@ -11,6 +11,42 @@ class GraphController extends responseData
          * ENTONCES SE EJECUTA EL INDEX COMO METODO PRESETERMINADO
          **/
     }
+    
+    // OTRO TIPO DE GRAFICAS
+    public function doGet(...$params)
+    {
+        $type = null; // visitas
+        $conexion = new ConexionDB();
+        if (isset($params["type"])) {
+            $type = $params["type"];
+        } else {
+            return parent::sendJsonResponse("error", "No se ha especificado el tipo de grafica");
+        }
+        if ($type === "VisitasPorDia") {
+            $jsonBody = [];
+            $endDate = new DateTime(); // Today's date
+            $startDate = new DateTime();
+            $startDate->modify('-30 days'); // 3 days ago
+
+            $interval = DateInterval::createFromDateString('1 day');
+            $period = new DatePeriod($startDate, $interval, $endDate);
+
+            foreach ($period as $date) {
+                $formattedDate = $date->format('Y-m-d');
+
+                $query = "SELECT COUNT(*) as count FROM registered_visits WHERE DATE(visit_date) = '$formattedDate'";
+                $result = $conexion->getData($query);
+                $count = $result == null ? 0 : $result[0]['count'];
+
+                $jsonBody[] = [
+                    'date' => $formattedDate,
+                    'total' => $count,
+                ];
+            }
+
+            return parent::sendJsonResponse("ok", $jsonBody);
+        }
+    }
 
     public function doPost(...$params)
     {
