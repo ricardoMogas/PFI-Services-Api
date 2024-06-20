@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-05-2024 a las 04:01:33
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Tiempo de generación: 13-06-2024 a las 22:36:57
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -42,9 +42,9 @@ CREATE TABLE `book` (
 --
 
 INSERT INTO `book` (`id_Book`, `id_borrowing`, `gender`, `title`, `publishers`, `status`, `author`) VALUES
-(5, 5, 'Didactic', 'Encoded Sacred Geometry', 'Elefante', 'busy', 'Angels Membrive'),
-(20, 4, 'Narrative', 'The play of light', 'Umbral', 'busy', 'Louise Penny'),
-(50, 6, 'Didactic', 'Shamans and robots', 'Gedisa', 'busy', 'Shamans and robots');
+(5, NULL, 'Didactic', 'Encoded Sacred Geometry', 'Elefante', 'busy', 'Angels Membrive'),
+(20, NULL, 'Narrative', 'The play of light', 'Umbral', 'busy', 'Louise Penny'),
+(50, NULL, 'Didactic', 'Shamans and robots', 'Gedisa', 'busy', 'Shamans and robots');
 
 -- --------------------------------------------------------
 
@@ -59,17 +59,6 @@ CREATE TABLE `borrowing` (
   `borrowing_date` datetime(6) NOT NULL,
   `return_date` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `borrowing`
---
-
-INSERT INTO `borrowing` (`id_borrowing`, `registration`, `type_borrowing`, `borrowing_date`, `return_date`) VALUES
-(1, 68322, 1, '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000'),
-(2, 69951, 1, '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000'),
-(4, 66208, 2, '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000'),
-(5, 66132, 2, '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000'),
-(6, 62231, 2, '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000');
 
 -- --------------------------------------------------------
 
@@ -92,9 +81,9 @@ CREATE TABLE `computer` (
 --
 
 INSERT INTO `computer` (`id`, `no_series`, `id_borrowing`, `status`, `model`, `type`, `description`) VALUES
-(1, 6194728, 1, 'Funcional', 'HP', 'Laptop', 'description generica con carateristicas, marca, etc.'),
-(2, 6810274, 2, 'Funcional', 'HP', 'Escritorio', 'description generica con carateristicas, marca, etc.'),
-(3, 123456, 1, 'Available', 'Test Model', 'Desktop', 'Test Computer');
+(1, 6194728, NULL, 'Funcional', 'HP', 'Laptop', 'description generica con carateristicas, marca, etc.'),
+(2, 6810274, NULL, 'Funcional', 'HP', 'Escritorio', 'description generica con carateristicas, marca, etc.'),
+(3, 123456, NULL, 'Available', 'Test Model', 'Desktop', 'Test Computer');
 
 -- --------------------------------------------------------
 
@@ -104,24 +93,10 @@ INSERT INTO `computer` (`id`, `no_series`, `id_borrowing`, `status`, `model`, `t
 
 CREATE TABLE `copies` (
   `registration_number` int(11) NOT NULL,
-  `registration` int(11) NOT NULL,
+  `registration` int(11) DEFAULT NULL,
   `total` int(11) NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `copies`
---
-
-INSERT INTO `copies` (`registration_number`, `registration`, `total`, `date`) VALUES
-(1, 66208, 18, '2024-02-16'),
-(2, 68322, 25, '2024-03-01'),
-(3, 68355, 26, '2024-01-17'),
-(4, 68627, 30, '0000-00-00'),
-(5, 69951, 38, '2024-02-20'),
-(6, 62231, 40, '2024-03-01'),
-(7, 66915, 40, '2024-02-14');
-
 -- --------------------------------------------------------
 
 --
@@ -160,31 +135,6 @@ CREATE TABLE `registered_visits` (
   `visit_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `registered_visits`
---
-
-INSERT INTO `registered_visits` (`no_Visit`, `registration`, `entry_time`, `exit_time`, `visit_date`) VALUES
-(2, 68322, '09:00:00.000000', '12:24:00.000000', '2024-03-04'),
-(3, 66915, '12:00:00.000000', '14:00:00.000000', '2024-03-03'),
-(4, 62231, '10:00:00.000000', '15:00:00.000000', '2024-02-29'),
-(5, 66132, '08:00:00.000000', '12:00:00.000000', '2024-03-01'),
-(6, 68355, '10:40:00.000000', '13:00:00.000000', '2024-03-05'),
-(7, 68627, '09:29:00.000000', '14:00:00.000000', '2024-03-06'),
-(8, 69951, '10:32:00.000000', '12:00:00.000000', '2024-03-07'),
-(12, 66208, '21:27:49.000000', '04:26:27.000000', '2024-03-26'),
-(13, 66208, '06:21:08.000000', '06:23:20.000000', '2024-03-28'),
-(14, 66208, '06:21:25.000000', '06:23:20.000000', '2024-03-28'),
-(15, 66208, '06:21:27.000000', '06:23:20.000000', '2024-03-28'),
-(16, 66208, '06:21:28.000000', '06:23:20.000000', '2024-03-28'),
-(19, 66208, '00:12:43.000000', '01:26:41.000000', '2024-04-11'),
-(20, 66208, '00:13:05.000000', '00:21:30.000000', '2024-04-10'),
-(21, 66208, '01:10:42.000000', '01:26:41.000000', '2024-04-11'),
-(22, 66208, '01:10:45.000000', '01:26:41.000000', '2024-04-11'),
-(23, 66208, '01:10:46.000000', '01:26:41.000000', '2024-04-11'),
-(24, 66208, '03:19:42.000000', '03:24:50.000000', '2024-04-16'),
-(25, 66208, '22:23:18.000000', '22:24:00.000000', '2024-04-17'),
-(26, 66208, '16:41:42.000000', '16:45:58.000000', '2024-05-08');
 
 -- --------------------------------------------------------
 
@@ -205,24 +155,6 @@ CREATE TABLE `students` (
   `origin_place` varchar(255) NOT NULL,
   `date_of_registration` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `students`
---
-
-INSERT INTO `students` (`registration`, `name`, `p_last_name`, `m_last_name`, `gender`, `birthday_date`, `ethnicity`, `career`, `status`, `origin_place`, `date_of_registration`) VALUES
-(1231, 'TEST', 'N/A', 'N/A', 'Hombre', '2024-05-09', 'Otomi', 'ISC', 'Baja temporal', 'asdf', '2024-05-10'),
-(12312, 'TEST1', 'N/A', 'N/A', 'Hombre', '2024-05-09', 'Otomi', 'ISC', 'Baja temporal', 'asdf', '2024-05-10'),
-(62231, 'Ricardo Arian', 'Puc', 'Duran', 'Hombre', '2003-05-14', 'Otro', 'ISC', 'Activo', 'Campeche', '2023-06-09'),
-(66132, 'Angel Gabriel', 'Manrero', 'Hidalgo', 'Hombre', '2002-04-16', 'Otro', 'ISC', 'Activo', 'Campeche', '2021-02-03'),
-(66208, 'Ricardo de jesus', 'Moo', 'Vargas', 'Hombre', '2001-10-29', 'Otro', 'ISC', 'Activo', 'Campeche', '2021-03-03'),
-(66209, 'Alvira Jesus Hidalgo pech', '', '', 'Mujer', '2001-10-28', 'Otro', 'ISC', 'Activo', 'Campeche', '2024-04-29'),
-(66915, 'Jorge Francisco', 'Dzul', 'Cobos', 'Hombre', '2002-10-28', 'Otro', 'ISC', 'Activo', 'Campeche', '2021-07-02'),
-(68322, 'Gael Alexander', 'Carrillo', 'Chan', 'Hombre', '2003-12-28', 'Otro', 'ISC', 'Activo', 'Campeche', '2022-11-15'),
-(68355, 'Axel Alessandro', 'Chávez', 'Moreno', 'Hombre', '2003-10-18', 'Otro', 'ISC', 'Activo', 'Campeche', '2023-03-31'),
-(68627, 'Arturo Alberto', 'Zavala', 'Morales', 'Hombre', '2002-12-06', 'Otro', 'ISC', 'Activo', 'Carmen', '2023-07-06'),
-(69951, 'Uriel Isai', 'Landeros', 'Mijangos', 'Hombre', '2003-09-30', 'Otro', 'ISC', 'Activo', 'Campeche', '2023-04-03'),
-(69952, 'testawa', 'test2', 'test2', 'Hombre', '1990-01-01', 'Otro', 'ISC', 'Activo', 'Campeche', '2024-04-11');
 
 -- --------------------------------------------------------
 
@@ -258,36 +190,6 @@ CREATE TABLE `unregistered_visits` (
   `visit_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `unregistered_visits`
---
-
-INSERT INTO `unregistered_visits` (`no_Visit`, `registration`, `entry_time`, `exit_time`, `visit_date`) VALUES
-(1, 66208, '05:52:06.000000', '01:36:31.000000', '2024-03-27'),
-(2, 66208, '06:05:11.000000', '01:36:31.000000', '2024-03-27'),
-(3, 66208, '06:24:45.000000', '01:36:31.000000', '2024-03-27'),
-(4, 66208, '06:26:22.000000', '01:36:31.000000', '2024-03-27'),
-(5, 66208, '06:26:45.000000', '01:36:31.000000', '2024-03-27'),
-(6, 66209, '01:31:20.000000', '01:45:15.000000', '2024-03-28'),
-(7, 66205, '22:35:11.000000', '22:53:49.000000', '2024-04-17'),
-(8, 66205, '22:39:06.000000', '22:53:49.000000', '2024-04-17'),
-(9, 66209, '22:40:45.000000', '22:55:09.000000', '2024-04-17'),
-(10, 66209, '22:40:55.000000', '22:55:09.000000', '2024-04-17'),
-(11, 66209, '22:40:58.000000', '22:55:09.000000', '2024-04-17'),
-(12, 66209, '22:41:02.000000', '22:55:09.000000', '2024-04-17'),
-(13, 66205, '16:46:12.000000', NULL, '2024-05-08'),
-(14, 66205, '16:34:02.000000', '16:35:37.000000', '2024-05-09'),
-(15, 66205, '16:34:08.000000', '16:35:37.000000', '2024-05-09'),
-(16, 123, '11:18:50.000000', NULL, '2024-05-25'),
-(17, 123, '11:20:10.000000', NULL, '2024-05-25'),
-(18, 123, '11:20:13.000000', NULL, '2024-05-25'),
-(19, 123, '11:20:32.000000', NULL, '2024-05-25'),
-(20, 123, '11:20:34.000000', NULL, '2024-05-25'),
-(21, 1234, '11:22:33.000000', NULL, '2024-05-25'),
-(22, 1234, '11:22:52.000000', NULL, '2024-05-25'),
-(23, 1234, '11:23:05.000000', NULL, '2024-05-25'),
-(24, 1234, '11:23:43.000000', NULL, '2024-05-25');
-
 -- --------------------------------------------------------
 
 --
@@ -299,15 +201,33 @@ CREATE TABLE `user` (
   `name` varchar(256) NOT NULL,
   `email` varchar(256) NOT NULL,
   `password` varchar(256) NOT NULL,
-  `rol` int(11) NOT NULL
+  `rol` int(11) NOT NULL,
+  `status` varchar(24) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `email`, `password`, `rol`) VALUES
-(1, 'root', 'simple@example.com', 'root', 0);
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `rol`, `status`) VALUES
+(1, 'AdminPFI', 'pfi-ingenieria@uacam.mx', 'pfi-ingenieria05', 0, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `service_hours`
+--
+
+CREATE TABLE `service_hours` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `startTime` time NOT NULL,
+  `endTime` time NOT NULL,
+  `hours` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Índices para tablas volcadas
@@ -357,6 +277,13 @@ ALTER TABLE `registered_visits`
   ADD KEY `registration_fk` (`registration`) USING BTREE;
 
 --
+-- Indices de la tabla `service_hours`
+--
+ALTER TABLE `service_hours`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_user` (`id_user`);
+
+--
 -- Indices de la tabla `students`
 --
 ALTER TABLE `students`
@@ -394,7 +321,7 @@ ALTER TABLE `book`
 -- AUTO_INCREMENT de la tabla `borrowing`
 --
 ALTER TABLE `borrowing`
-  MODIFY `id_borrowing` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_borrowing` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `computer`
@@ -406,19 +333,25 @@ ALTER TABLE `computer`
 -- AUTO_INCREMENT de la tabla `copies`
 --
 ALTER TABLE `copies`
-  MODIFY `registration_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `registration_number` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `registered_visits`
 --
 ALTER TABLE `registered_visits`
-  MODIFY `no_Visit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `no_Visit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2082;
+
+--
+-- AUTO_INCREMENT de la tabla `service_hours`
+--
+ALTER TABLE `service_hours`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `students`
 --
 ALTER TABLE `students`
-  MODIFY `registration` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69953;
+  MODIFY `registration` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100000;
 
 --
 -- AUTO_INCREMENT de la tabla `type_borrowing`
@@ -430,7 +363,7 @@ ALTER TABLE `type_borrowing`
 -- AUTO_INCREMENT de la tabla `unregistered_visits`
 --
 ALTER TABLE `unregistered_visits`
-  MODIFY `no_Visit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `no_Visit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
@@ -478,6 +411,12 @@ ALTER TABLE `locker`
 --
 ALTER TABLE `registered_visits`
   ADD CONSTRAINT `registered_visits_ibfk_1` FOREIGN KEY (`registration`) REFERENCES `students` (`registration`) ON DELETE NO ACTION;
+
+--
+-- Filtros para la tabla `service_hours`
+--
+ALTER TABLE `service_hours`
+  ADD CONSTRAINT `service_hours_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
